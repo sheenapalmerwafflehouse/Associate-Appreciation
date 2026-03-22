@@ -26,12 +26,19 @@
 
 .ticker-box {
   display: flex;
+  order: 1; /* Moves it to the first position */
+  flex: 1; /* IMPORTANT: This tells the pill to 'grow' and take all space */
+  max-width: 800px; /* Allows it to be much wider for long messages */
+  
   align-items: center;
   gap: 12px;
   background: var(--yellow-2);
-  padding: 6px 16px;
+  padding: 6px 20px;
   border-radius: 999px;
   border: 1px solid var(--border);
+  overflow: hidden;
+}
+
   
   /* FIXED WIDTH SETTINGS */
   width: 500px; /* Sets a specific width */
@@ -40,11 +47,20 @@
 }
 
 .ticker-window {
-  height: var(--ticker-height);
+  height: 24px;
   overflow: hidden;
-  flex: 1; /* Takes up all remaining space in the 500px box */
+  flex: 1;
+  display: flex;
+  justify-content: center; 
 }
 
+#ticker-content {
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 500;
+  color: var(--text);
+  font-size: 0.9rem;
+}
 .ticker-message {
   height: var(--ticker-height);
   line-height: var(--ticker-height);
@@ -114,29 +130,30 @@
     }
 
     .topbar-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes items to the far edges */
+  gap: 20px;
+}
+
 
     .brand {
-      font-weight: 800;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      font-size: 1rem;
-    }
+  order: 2; /* Moves it to the second position */
+  font-weight: 800;
+  white-space: nowrap; /* Prevents the title from wrapping to two lines */
+  font-size: 0.9rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
 
-    .nav {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+.nav {
+  order: 3; /* Keeps buttons on the far right */
+  display: flex;
+  gap: 10px;
+}
 
     .pill, .section-link {
       text-decoration: none;
