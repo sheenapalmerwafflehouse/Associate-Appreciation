@@ -380,21 +380,21 @@
   --shadow: 0 12px 28px rgba(0,0,0,.08);
 }
 
-	  /* Matching the Photo Contest Image Style */
+	/* This targets the container we built earlier */ 
 .section-image-wrap {
-  display: block;
-  border-radius: 18px;
+  max-width: 400px; /* Adjust this number (e.g., 300px or 500px) to the size you want */
+  margin: 0 auto 20px; /* Centers the image and adds space below it */
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid var(--border);
-  background: white;
-  margin-bottom: 15px;
 }
 
 .section-image-wrap img {
-  width: 100%;
-  height: auto;
-  transition: transform .4s ease;
+  width: 100%; /* Makes the image fill exactly 400px */
+  height: auto; /* Keeps the proportions correct */
+  display: block;
 }
+
+
 
 .section-image-wrap:hover img {
   transform: scale(1.03); /* The same zoom effect you have elsewhere */
