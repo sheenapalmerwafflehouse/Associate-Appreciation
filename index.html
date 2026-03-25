@@ -298,7 +298,7 @@
       padding: 20px;
       border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 22px;
-      background: linear-gradient(180deg, #fffdf2 0%, #f3f8df 100%);
+      background: linear-gradient(180deg, #fffdf2 0%, #f7f8e8 50%, #f1f6dc 100%);
       box-shadow: 0 10px 24px rgba(0,0,0,.06);
       text-align: center;
       opacity: 0;
@@ -327,17 +327,31 @@
       max-width: 520px;
       margin: 0 auto;
       padding: 12px 14px;
-      background: #ffffff;
+      background: linear-gradient(180deg, #ffe66a 0%, var(--yellow) 100%);
       border: 1px solid rgba(0,0,0,.08);
       border-radius: 999px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 4px 12px rgba(0,0,0,.05);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 2px 0 rgba(0,0,0,.08),
+        0 10px 18px rgba(0,0,0,.10);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .audio-player-wrap:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.8),
+        0 2px 0 rgba(0,0,0,.08),
+        0 14px 24px rgba(0,0,0,.14);
+      background: linear-gradient(180deg, #fff07f 0%, #ffe15a 100%);
     }
 
     .audio-player {
       width: 100%;
       display: block;
       border-radius: 999px;
-      accent-color: #d8b600;
+      accent-color: #111111;
+      filter: saturate(1.02) contrast(1.02);
     }
 
     #ceo-message {
@@ -565,7 +579,7 @@
   <header class="topbar">
     <div class="topbar-inner">
       <div class="logo-link">
-        <img src="Images/Mission Module Pics (17).png" alt="Waffle House Logo" class="nav-logo">
+        <img src="Images/Mission Module Pics (17).png" alt="Waffle House Logo" class="nav-logo" />
       </div>
     </div>
   </header>
@@ -588,11 +602,7 @@
           <p>Press play to listen.</p>
 
           <div class="audio-player-wrap">
-            <audio
-              class="audio-player"
-              controls
-              preload="metadata"
-            >
+            <audio class="audio-player" controls preload="metadata">
               <source src="Audio/appreciationsong.mp3" type="audio/mpeg" />
               Your browser does not support the audio element.
             </audio>
@@ -631,6 +641,7 @@
         </div>
       </div>
     </section>
+
     <section id="shoes-for-crews" class="section reveal">
       <div class="section-head">
         <h2>Shoes For Crews</h2>
@@ -648,7 +659,8 @@
           <a class="section-link secondary" href="PDFs/Shoes for Crews FAQs.pdf">View FAQs</a>
         </div>
       </div>
-        </section>
+    </section>
+
     <section id="trivia" class="section reveal">
       <div class="section-head">
         <h2>Museum Tour &amp; Trivia</h2>
@@ -678,7 +690,8 @@
         </div>
       </div>
     </section>
-<section id="anniversaries" class="section reveal">
+
+    <section id="anniversaries" class="section reveal">
       <div class="section-head">
         <h2>Anniversaries</h2>
       </div>
@@ -694,8 +707,8 @@
           <a class="section-link" href="#">Recognition details</a>
         </div>
       </div>
-  
     </section>
+
     <section id="photo" class="section reveal">
       <div class="section-head">
         <h2>Photo Contest</h2>
@@ -713,6 +726,7 @@
         </div>
       </div>
     </section>
+
     <section id="touchtunes" class="section reveal">
       <div class="section-head">
         <h2>TouchTunes</h2>
@@ -741,7 +755,7 @@
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox-inner">
       <button class="lightbox-close" type="button" aria-label="Close image">&times;</button>
-      <img id="lightbox-image" src="" alt="">
+      <img id="lightbox-image" src="" alt="" />
     </div>
   </div>
 
