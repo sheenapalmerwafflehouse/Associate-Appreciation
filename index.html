@@ -12,6 +12,8 @@
       --text: #111111;
       --muted: #5e5e5e;
       --yellow: #f5d547;
+      --yellow-dark: #d4b000;
+      --yellow-soft: #fff7c8;
       --green-tint: #f0f6df;
       --border: rgba(0, 0, 0, 0.08);
       --shadow: 0 12px 28px rgba(0,0,0,.08);
@@ -35,10 +37,30 @@
       background: radial-gradient(circle at top left, #faf9ee 0%, #f6f6f4 38%, #efefe9 100%);
     }
 
+    body.lightbox-open {
+      overflow: hidden;
+    }
+
     img {
       max-width: 100%;
       height: auto;
       display: block;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    /* Scroll progress bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--yellow), #ffe66a);
+      z-index: 9999;
+      box-shadow: 0 2px 10px rgba(245, 213, 71, 0.45);
     }
 
     .topbar {
@@ -91,7 +113,7 @@
       border: 1px solid var(--border);
       border-radius: 26px;
       box-shadow: var(--shadow);
-      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease, opacity 0.7s ease;
       position: relative;
       overflow: hidden;
     }
@@ -100,6 +122,17 @@
       transform: translateY(-8px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
       border-color: var(--yellow);
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px);
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .section-head {
@@ -137,6 +170,7 @@
       overflow: hidden;
       border: 1px solid var(--border);
       background: white;
+      cursor: zoom-in;
     }
 
     .section-image-link img {
@@ -197,6 +231,7 @@
       text-align: left;
       max-width: 760px;
       width: 100%;
+      position: relative;
     }
 
     .hero-copy {
@@ -204,6 +239,14 @@
       max-width: 760px;
       margin: 0 auto 18px;
       text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .hero-copy.animate {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     #hero .eyebrow {
@@ -231,6 +274,14 @@
       display: flex;
       justify-content: center;
       margin-top: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .hero-image.animate {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .hero-image img {
@@ -252,6 +303,14 @@
       background: linear-gradient(180deg, #fffdf2 0%, #f3f8df 100%);
       box-shadow: 0 10px 24px rgba(0,0,0,.06);
       text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .audio-card.animate {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .audio-card h3 {
@@ -262,25 +321,125 @@
     }
 
     .audio-card p {
-      margin: 0 0 14px;
+      margin: 0 0 16px;
       color: var(--muted);
     }
 
-    .audio-player-wrap {
-      max-width: 520px;
+    .audio-player-shell {
+      max-width: 560px;
       margin: 0 auto;
-      padding: 12px 14px;
-      background: #ffffff;
+      padding: 14px;
+      background: #fff;
       border: 1px solid rgba(0,0,0,.08);
-      border-radius: 999px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 4px 12px rgba(0,0,0,.05);
+      border-radius: 22px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 6px 16px rgba(0,0,0,.06);
     }
 
-    .audio-player {
+    .audio-player-ui {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .audio-play-btn {
+      width: 54px;
+      height: 54px;
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--yellow), #ebc92e);
+      color: #111;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(245, 213, 71, 0.35);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      flex-shrink: 0;
+    }
+
+    .audio-play-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(245, 213, 71, 0.42);
+      background: linear-gradient(180deg, #ffe66a, var(--yellow));
+    }
+
+    .audio-play-btn:active {
+      transform: scale(.98);
+    }
+
+    .audio-play-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      margin-left: 2px;
+    }
+
+    .audio-play-btn.is-playing svg {
+      margin-left: 0;
+    }
+
+    .audio-progress-wrap {
       width: 100%;
-      display: block;
+      text-align: left;
+    }
+
+    .audio-time {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .86rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+
+    .audio-progress {
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+      height: 10px;
       border-radius: 999px;
-      accent-color: #d8b600;
+      outline: none;
+      background: linear-gradient(90deg, var(--yellow) 0%, var(--yellow) 0%, #e9e9e9 0%, #e9e9e9 100%);
+      cursor: pointer;
+    }
+
+    .audio-progress::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #111;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.18);
+    }
+
+    .audio-progress::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #111;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.18);
+    }
+
+    .audio-progress::-moz-range-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #e9e9e9;
+    }
+
+    .audio-status {
+      font-size: .86rem;
+      font-weight: 700;
+      color: #7b6c00;
+      white-space: nowrap;
+    }
+
+    .audio-native {
+      display: none;
     }
 
     #ceo-message {
@@ -351,6 +510,65 @@
       font-size: .94rem;
     }
 
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 17, 17, 0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .25s ease, visibility .25s ease;
+      z-index: 5000;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: min(1100px, 96vw);
+      max-height: 92vh;
+      transform: scale(.96);
+      transition: transform .25s ease;
+    }
+
+    .lightbox.open .lightbox-inner {
+      transform: scale(1);
+    }
+
+    .lightbox img {
+      display: block;
+      max-width: 100%;
+      max-height: 92vh;
+      border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+      background: #fff;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 50%;
+      background: #fff;
+      color: #111;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,.24);
+    }
+
     @media (max-width: 900px) {
       .nav-logo {
         height: 68px;
@@ -407,14 +625,54 @@
         font-size: clamp(28px, 8vw, 42px);
       }
 
-      .audio-player-wrap {
-        border-radius: 20px;
-        padding: 10px 12px;
+      .audio-player-ui {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .audio-play-btn {
+        margin: 0 auto;
+      }
+
+      .audio-status {
+        text-align: center;
+      }
+
+      .lightbox {
+        padding: 16px;
+      }
+
+      .lightbox-close {
+        top: -10px;
+        right: -6px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .reveal,
+      .hero-copy,
+      .hero-image,
+      .audio-card {
+        opacity: 1 !important;
+        transform: none !important;
       }
     }
   </style>
 </head>
 <body>
+  <div id="scroll-progress"></div>
+
   <header class="topbar">
     <div class="topbar-inner">
       <div class="logo-link">
@@ -425,31 +683,56 @@
 
   <main class="sections">
 
-    <section id="hero" class="section">
+    <section id="hero" class="section reveal">
       <div class="section-image-wrap hero-card">
         <div class="hero-copy">
           <div class="eyebrow">Welcome to Our</div>
           <h1>Celebration Page</h1>
         </div>
 
-        <div class="section-image-link hero-image">
+        <div class="section-image-link hero-image lightbox-trigger">
           <img src="Images/Intro graphic (1).png" alt="Associate Appreciation" />
         </div>
 
         <div class="audio-card">
-          <h3>Appreciation Song</h3>
+          <h3>Smothered, Scattered, and Thanks Song</h3>
           <p>Click below to listen.</p>
 
-          <div class="audio-player-wrap">
+          <div class="audio-player-shell">
+            <div class="audio-player-ui">
+              <button class="audio-play-btn" type="button" aria-label="Play song">
+                <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8 5v14l11-7z"></path>
+                </svg>
+              </button>
+
+              <div class="audio-progress-wrap">
+                <div class="audio-time">
+                  <span class="audio-current">0:00</span>
+                  <span class="audio-duration">0:00</span>
+                </div>
+                <input
+                  class="audio-progress"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="0"
+                  step="0.1"
+                  aria-label="Audio progress"
+                />
+              </div>
+
+              <div class="audio-status">Now Playing</div>
+            </div>
+
             <audio
-              class="audio-player"
-              controls
+              class="audio-native"
+              preload="metadata"
               controlsList="nodownload noplaybackrate noremoteplayback"
               disablePictureInPicture
               oncontextmenu="return false;"
-              preload="metadata"
             >
-              <source src="Audio/scattered,-smothered-thanks.mp3" type="audio/mpeg" />
+              <source src="Audio/scattered,smothered-thanks.mp3" type="audio/mpeg" />
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -457,7 +740,7 @@
       </div>
     </section>
 
-    <section id="ceo-message" class="section">
+    <section id="ceo-message" class="section reveal">
       <h2>From the CEO: Thank You!</h2>
       <div class="ceo-video-wrap">
         <iframe
@@ -470,13 +753,13 @@
       </div>
     </section>
 
-    <section id="dressup" class="section">
+    <section id="dressup" class="section reveal">
       <div class="section-head">
         <h2>Dress-Up Days</h2>
       </div>
 
       <div class="section-image-wrap">
-        <div class="section-image-link">
+        <div class="section-image-link lightbox-trigger">
           <img src="Images/2026 Associate Appreciation Dress-Up Days (2).png" alt="Dress-up Schedule" />
         </div>
 
@@ -488,13 +771,13 @@
       </div>
     </section>
 
-    <section id="trivia" class="section">
+    <section id="trivia" class="section reveal">
       <div class="section-head">
         <h2>Museum Tour &amp; Trivia</h2>
       </div>
 
       <div class="section-image-wrap">
-        <div class="section-image-link">
+        <div class="section-image-link lightbox-trigger">
           <img src="Images/Museum Tour.png" alt="Museum Tour and Trivia" />
         </div>
 
@@ -518,13 +801,13 @@
       </div>
     </section>
 
-    <section id="photo" class="section">
+    <section id="photo" class="section reveal">
       <div class="section-head">
         <h2>Photo Contest</h2>
       </div>
 
       <div class="section-image-wrap">
-        <div class="section-image-link">
+        <div class="section-image-link lightbox-trigger">
           <img src="Images/2026 ASSOCIATE APPRECIATION PHOTO CONTEST.jpg" alt="Photo Contest" />
         </div>
 
@@ -536,13 +819,13 @@
       </div>
     </section>
 
-    <section id="anniversaries" class="section">
+    <section id="anniversaries" class="section reveal">
       <div class="section-head">
         <h2>Anniversaries</h2>
       </div>
 
       <div class="section-image-wrap anniversary-image">
-        <div class="section-image-link">
+        <div class="section-image-link lightbox-trigger">
           <img src="Images/Anniversary Landing Page Graphic (8).png" alt="Anniversaries" />
         </div>
 
@@ -554,13 +837,13 @@
       </div>
     </section>
 
-    <section id="shoes-for-crews" class="section">
+    <section id="shoes-for-crews" class="section reveal">
       <div class="section-head">
         <h2>Shoes For Crews</h2>
       </div>
 
       <div class="section-image-wrap">
-        <div class="section-image-link">
+        <div class="section-image-link lightbox-trigger">
           <img src="Images/Shoes for Crews.png" alt="Shoes For Crews Collection" />
         </div>
 
@@ -573,13 +856,13 @@
       </div>
     </section>
 
-    <section id="touchtunes" class="section">
+    <section id="touchtunes" class="section reveal">
       <div class="section-head">
         <h2>TouchTunes</h2>
       </div>
 
       <div class="section-image-wrap">
-        <div class="section-image-link">
+        <div class="section-image-link lightbox-trigger">
           <img src="Images/TouchTunes.png" alt="TouchTunes" />
         </div>
 
@@ -598,19 +881,237 @@
     &copy; 2026 Waffle House Inc. Intellectual Property. All rights reserved.
   </div>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" type="button" aria-label="Close image">&times;</button>
+      <img id="lightbox-image" src="" alt="">
+    </div>
+  </div>
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const audio = document.querySelector(".audio-player");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      if (audio) {
-        audio.addEventListener("contextmenu", (e) => e.preventDefault());
+      /* Scroll progress bar */
+      const progressBar = document.getElementById("scroll-progress");
+
+      const updateProgressBar = () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = progress + "%";
+      };
+
+      updateProgressBar();
+      window.addEventListener("scroll", updateProgressBar);
+
+      /* Scroll reveal */
+      const revealItems = document.querySelectorAll(".reveal");
+
+      if (!prefersReducedMotion && "IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.14 });
+
+        revealItems.forEach((item) => revealObserver.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add("show"));
       }
 
-      document.addEventListener("contextmenu", (e) => {
-        if (e.target.closest(".audio-player-wrap")) {
-          e.preventDefault();
+      /* Hero entrance animation */
+      const heroCopy = document.querySelector(".hero-copy");
+      const heroImage = document.querySelector(".hero-image");
+      const audioCard = document.querySelector(".audio-card");
+
+      if (!prefersReducedMotion) {
+        setTimeout(() => heroCopy?.classList.add("animate"), 100);
+        setTimeout(() => heroImage?.classList.add("animate"), 350);
+        setTimeout(() => audioCard?.classList.add("animate"), 600);
+      } else {
+        heroCopy?.classList.add("animate");
+        heroImage?.classList.add("animate");
+        audioCard?.classList.add("animate");
+      }
+
+      /* Confetti burst on load */
+      if (!prefersReducedMotion && typeof confetti === "function") {
+        setTimeout(() => {
+          confetti({
+            particleCount: 110,
+            spread: 78,
+            startVelocity: 34,
+            origin: { y: 0.28 }
+          });
+        }, 500);
+      }
+
+      /* Lightbox */
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const lightboxClose = document.querySelector(".lightbox-close");
+      const triggers = document.querySelectorAll(".lightbox-trigger");
+
+      const openLightbox = (img) => {
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt || "";
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.classList.add("lightbox-open");
+      };
+
+      const closeLightbox = () => {
+        lightbox.classList.remove("open");
+        lightbox.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("lightbox-open");
+        setTimeout(() => {
+          lightboxImage.src = "";
+          lightboxImage.alt = "";
+        }, 180);
+      };
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          const img = trigger.querySelector("img");
+          if (img) openLightbox(img);
+        });
+
+        trigger.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            const img = trigger.querySelector("img");
+            if (img) openLightbox(img);
+          }
+        });
+
+        trigger.setAttribute("tabindex", "0");
+        trigger.setAttribute("role", "button");
+        trigger.setAttribute("aria-label", "Open image");
+      });
+
+      lightboxClose.addEventListener("click", closeLightbox);
+
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && lightbox.classList.contains("open")) {
+          closeLightbox();
         }
       });
+
+      /* Custom audio player */
+      const audio = document.querySelector(".audio-native");
+      const playBtn = document.querySelector(".audio-play-btn");
+      const progress = document.querySelector(".audio-progress");
+      const currentTimeEl = document.querySelector(".audio-current");
+      const durationEl = document.querySelector(".audio-duration");
+      const statusEl = document.querySelector(".audio-status");
+
+      const playIcon = `
+        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 5v14l11-7z"></path>
+        </svg>
+      `;
+
+      const pauseIcon = `
+        <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 5h4v14H7zm6 0h4v14h-4z"></path>
+        </svg>
+      `;
+
+      const formatTime = (seconds) => {
+        if (!isFinite(seconds)) return "0:00";
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, "0")}`;
+      };
+
+      const updateProgressFill = () => {
+        const value = Number(progress.value) || 0;
+        progress.style.background =
+          `linear-gradient(90deg, var(--yellow) 0%, var(--yellow) ${value}%, #e9e9e9 ${value}%, #e9e9e9 100%)`;
+      };
+
+      const updatePlayButton = () => {
+        if (audio.paused) {
+          playBtn.innerHTML = playIcon;
+          playBtn.classList.remove("is-playing");
+          playBtn.setAttribute("aria-label", "Play song");
+          statusEl.textContent = "Ready to Play";
+        } else {
+          playBtn.innerHTML = pauseIcon;
+          playBtn.classList.add("is-playing");
+          playBtn.setAttribute("aria-label", "Pause song");
+          statusEl.textContent = "Now Playing";
+        }
+      };
+
+      if (audio && playBtn && progress) {
+        audio.addEventListener("loadedmetadata", () => {
+          durationEl.textContent = formatTime(audio.duration);
+        });
+
+        audio.addEventListener("timeupdate", () => {
+          if (audio.duration) {
+            progress.value = (audio.currentTime / audio.duration) * 100;
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+            durationEl.textContent = formatTime(audio.duration);
+            updateProgressFill();
+          }
+        });
+
+        audio.addEventListener("ended", () => {
+          updatePlayButton();
+          progress.value = 0;
+          currentTimeEl.textContent = "0:00";
+          updateProgressFill();
+          statusEl.textContent = "Replay";
+        });
+
+        playBtn.addEventListener("click", async () => {
+          try {
+            if (audio.paused) {
+              await audio.play();
+            } else {
+              audio.pause();
+            }
+            updatePlayButton();
+          } catch (err) {
+            console.error("Audio playback failed:", err);
+          }
+        });
+
+        audio.addEventListener("play", updatePlayButton);
+        audio.addEventListener("pause", updatePlayButton);
+
+        progress.addEventListener("input", () => {
+          if (audio.duration) {
+            const newTime = (progress.value / 100) * audio.duration;
+            audio.currentTime = newTime;
+            updateProgressFill();
+          }
+        });
+
+        audio.addEventListener("contextmenu", (e) => e.preventDefault());
+        document.addEventListener("contextmenu", (e) => {
+          if (e.target.closest(".audio-player-shell")) {
+            e.preventDefault();
+          }
+        });
+
+        updateProgressFill();
+        updatePlayButton();
+      }
     });
   </script>
 </body>
