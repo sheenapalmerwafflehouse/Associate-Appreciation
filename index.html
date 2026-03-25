@@ -242,6 +242,36 @@
       border-radius: 24px;
     }
 
+    /* NEW: Intro audio box */
+    .audio-card {
+      width: 100%;
+      max-width: 760px;
+      margin: 18px auto 0;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fffdf5, #f7f7f2);
+      box-shadow: 0 6px 18px rgba(0,0,0,.05);
+      text-align: center;
+    }
+
+    .audio-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .audio-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .audio-player {
+      width: 100%;
+      max-width: 460px;
+    }
+
     #ceo-message {
       text-align: center;
     }
@@ -323,7 +353,8 @@
       .hero-copy,
       .hero-image img,
       .ceo-video-wrap,
-      .museum-video-wrap {
+      .museum-video-wrap,
+      .audio-card {
         max-width: 100%;
       }
     }
@@ -387,6 +418,16 @@
 
         <div class="section-image-link hero-image">
           <img src="Images/Intro graphic (1).png" alt="Associate Appreciation" />
+        </div>
+
+        <!-- NEW: MP3 / audio section inside hero box -->
+        <div class="audio-card">
+          <h3>Smothered, Scattered, and Thanks Song</h3>
+          <p>Click below to listen.</p>
+          <audio class="audio-player" controls>
+            <source src="Audio/smothered-scattered-and-thanks.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
         </div>
       </div>
     </section>
@@ -503,6 +544,30 @@
         <div class="links">
           <a class="section-link" href="https://www.shoesforcrews.com/wafflehouse">Shop Now!</a>
           <a class="section-link secondary" href="PDFs/Shoes for Crews FAQs.pdf">View FAQs</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW: TouchTunes section -->
+    <section id="touchtunes" class="section">
+      <div class="section-head">
+        <h2>TouchTunes</h2>
+      </div>
+
+      <div class="section-image-wrap">
+        <div class="section-image-link">
+          <!-- Replace with your actual TouchTunes image -->
+          <img src="Images/TouchTunes.png" alt="TouchTunes" />
+        </div>
+
+        <p>Enjoy free credits on the house because your hospitality is like music to our ears.</p>
+
+        <div class="links">
+          <!-- Replace with your real app download URL -->
+          <a class="section-link" href="https://www.touchtunes.com/" target="_blank" rel="noopener noreferrer">Click to Download App</a>
+
+          <!-- Replace with your real FAQ PDF -->
+          <a class="section-link secondary" href="PDFs/TouchTunes FAQs.pdf" target="_blank" rel="noopener noreferrer">View FAQs</a>
         </div>
       </div>
     </section>
