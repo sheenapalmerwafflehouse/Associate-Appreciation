@@ -37,7 +37,8 @@
       background: radial-gradient(circle at top left, #faf9ee 0%, #f6f6f4 38%, #efefe9 100%);
     }
 
-    body.lightbox-open {
+    body.lightbox-open,
+    body.milestone-open {
       overflow: hidden;
     }
 
@@ -389,23 +390,86 @@
     }
 
     .anniversary-image {
-      max-width: 560px;
+      max-width: 700px;
     }
 
-    .anniversary-image .section-image-link {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
+    .anniversary-interactive {
+      position: relative;
+      display: block;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
       background: #fff;
+      cursor: default;
     }
 
-    .anniversary-image img {
+    .anniversary-interactive img {
       width: 100%;
-      max-width: 560px;
+      display: block;
       height: auto;
-      object-fit: contain;
-      margin: 0 auto;
+    }
+
+    .anniversary-instruction {
+      text-align: center;
+      font-weight: 700;
+      color: #7b6c00;
+      margin: 8px 0 14px;
+      line-height: 1.5;
+    }
+
+    .balloon-hotspot {
+      position: absolute;
+      width: 10.5%;
+      height: 15%;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .balloon-hotspot:focus-visible {
+      outline: 3px solid rgba(245, 213, 71, 0.95);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 6px rgba(245, 213, 71, 0.25);
+    }
+
+    .balloon-hotspot::after {
+      content: "";
+      position: absolute;
+      inset: -8%;
+      border-radius: 50%;
+      background: rgba(245, 213, 71, 0);
+      transition: background .18s ease, transform .18s ease;
+    }
+
+    .balloon-hotspot:hover::after,
+    .balloon-hotspot:focus-visible::after,
+    .balloon-hotspot:active::after {
+      background: rgba(245, 213, 71, 0.16);
+      transform: scale(1.06);
+    }
+
+    /* Top row */
+    .balloon-1  { top: 7.5%;  left: 10.2%; }
+    .balloon-2  { top: 5.2%;  left: 20.8%; }
+    .balloon-3  { top: 6.1%;  left: 32.0%; }
+    .balloon-4  { top: 2.2%;  left: 43.0%; }
+    .balloon-5  { top: 5.8%;  left: 54.2%; }
+    .balloon-10 { top: 4.8%;  left: 65.2%; }
+    .balloon-15 { top: 8.0%;  left: 76.0%; }
+
+    /* Bottom row */
+    .balloon-20 { top: 20.8%; left: 9.0%; }
+    .balloon-25 { top: 17.2%; left: 20.8%; }
+    .balloon-30 { top: 18.0%; left: 32.2%; }
+    .balloon-35 { top: 14.2%; left: 43.8%; }
+    .balloon-40 { top: 16.8%; left: 55.5%; }
+    .balloon-45 { top: 18.5%; left: 66.5%; }
+    .balloon-50 { top: 18.6%; left: 77.0%; }
+
+    .anniversary-summary {
+      margin-top: 16px;
     }
 
     .hero-links {
@@ -422,7 +486,8 @@
       font-size: .94rem;
     }
 
-    .lightbox {
+    .lightbox,
+    .milestone-modal {
       position: fixed;
       inset: 0;
       background: rgba(17, 17, 17, 0.82);
@@ -437,7 +502,8 @@
       z-index: 5000;
     }
 
-    .lightbox.open {
+    .lightbox.open,
+    .milestone-modal.open {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
@@ -451,7 +517,8 @@
       transition: transform .25s ease;
     }
 
-    .lightbox.open .lightbox-inner {
+    .lightbox.open .lightbox-inner,
+    .milestone-modal.open .milestone-modal-inner {
       transform: scale(1);
     }
 
@@ -464,7 +531,8 @@
       background: #fff;
     }
 
-    .lightbox-close {
+    .lightbox-close,
+    .milestone-close {
       position: absolute;
       top: -14px;
       right: -14px;
@@ -478,6 +546,47 @@
       line-height: 1;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(0,0,0,.24);
+    }
+
+    .milestone-modal-inner {
+      position: relative;
+      width: min(420px, 92vw);
+      background: linear-gradient(180deg, #fffdf2 0%, #f7f8e8 50%, #f1f6dc 100%);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 24px;
+      padding: 28px 24px 24px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.28);
+      text-align: center;
+      transform: scale(.96);
+      transition: transform .25s ease;
+    }
+
+    .milestone-badge {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffe66a 0%, var(--yellow) 100%);
+      color: #111;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      box-shadow: 0 6px 14px rgba(0,0,0,.10);
+    }
+
+    .milestone-modal h3 {
+      margin: 0 0 10px;
+      font-size: clamp(1.25rem, 3vw, 1.7rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+
+    .milestone-modal p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.04rem;
+      line-height: 1.65;
     }
 
     @media (max-width: 900px) {
@@ -541,13 +650,24 @@
         padding: 10px 12px;
       }
 
-      .lightbox {
+      .balloon-hotspot {
+        width: 12.5%;
+        height: 16%;
+      }
+
+      .lightbox,
+      .milestone-modal {
         padding: 16px;
       }
 
-      .lightbox-close {
+      .lightbox-close,
+      .milestone-close {
         top: -10px;
         right: -6px;
+      }
+
+      .milestone-modal-inner {
+        padding: 26px 18px 20px;
       }
     }
 
@@ -642,25 +762,6 @@
       </div>
     </section>
 
-    <section id="shoes-for-crews" class="section reveal">
-      <div class="section-head">
-        <h2>Shoes For Crews</h2>
-      </div>
-
-      <div class="section-image-wrap">
-        <div class="section-image-link lightbox-trigger">
-          <img src="Images/Shoes for Crews.png" alt="Shoes For Crews Collection" />
-        </div>
-
-        <p>Don’t need a new pair? Pay it forward! Use your credit to grab shoes for a coworker (see FAQs for steps).</p>
-
-        <div class="links">
-          <a class="section-link" href="https://www.shoesforcrews.com/wafflehouse">Shop Now!</a>
-          <a class="section-link secondary" href="PDFs/Shoes for Crews FAQs.pdf">View FAQs</a>
-        </div>
-      </div>
-    </section>
-
     <section id="trivia" class="section reveal">
       <div class="section-head">
         <h2>Museum Tour &amp; Trivia</h2>
@@ -691,24 +792,6 @@
       </div>
     </section>
 
-    <section id="anniversaries" class="section reveal">
-      <div class="section-head">
-        <h2>Anniversaries</h2>
-      </div>
-
-      <div class="section-image-wrap anniversary-image">
-        <div class="section-image-link lightbox-trigger">
-          <img src="Images/Anniversary Landing Page Graphic (8).png" alt="Anniversaries" />
-        </div>
-
-        <p>Celebrating over 16,000 Associates for their dedication and service.</p>
-
-        <div class="links">
-          <a class="section-link" href="#">Recognition details</a>
-        </div>
-      </div>
-    </section>
-
     <section id="photo" class="section reveal">
       <div class="section-head">
         <h2>Photo Contest</h2>
@@ -723,6 +806,60 @@
 
         <div class="links">
           <a class="section-link" href="https://form.jotform.com/260616390409053">Submission &amp; Contest Rules</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="anniversaries" class="section reveal">
+      <div class="section-head">
+        <h2>Anniversaries</h2>
+      </div>
+
+      <div class="section-image-wrap anniversary-image">
+        <p class="anniversary-instruction">Tap a balloon to see how many associates are celebrating each milestone.</p>
+
+        <div class="anniversary-interactive">
+          <img src="Images/Anniversary Landing Page Graphic (8).png" alt="Anniversaries" />
+
+          <button class="balloon-hotspot balloon-1"  type="button" data-years="1"  data-count="6248" aria-label="See 1 year milestone count"></button>
+          <button class="balloon-hotspot balloon-2"  type="button" data-years="2"  data-count="3650" aria-label="See 2 year milestone count"></button>
+          <button class="balloon-hotspot balloon-3"  type="button" data-years="3"  data-count="2293" aria-label="See 3 year milestone count"></button>
+          <button class="balloon-hotspot balloon-4"  type="button" data-years="4"  data-count="1793" aria-label="See 4 year milestone count"></button>
+          <button class="balloon-hotspot balloon-5"  type="button" data-years="5"  data-count="1345" aria-label="See 5 year milestone count"></button>
+          <button class="balloon-hotspot balloon-10" type="button" data-years="10" data-count="651"  aria-label="See 10 year milestone count"></button>
+          <button class="balloon-hotspot balloon-15" type="button" data-years="15" data-count="290"  aria-label="See 15 year milestone count"></button>
+          <button class="balloon-hotspot balloon-20" type="button" data-years="20" data-count="141"  aria-label="See 20 year milestone count"></button>
+          <button class="balloon-hotspot balloon-25" type="button" data-years="25" data-count="58"   aria-label="See 25 year milestone count"></button>
+          <button class="balloon-hotspot balloon-30" type="button" data-years="30" data-count="20"   aria-label="See 30 year milestone count"></button>
+          <button class="balloon-hotspot balloon-35" type="button" data-years="35" data-count="5"    aria-label="See 35 year milestone count"></button>
+          <button class="balloon-hotspot balloon-40" type="button" data-years="40" data-count="4"    aria-label="See 40 year milestone count"></button>
+          <button class="balloon-hotspot balloon-45" type="button" data-years="45" data-count="1"    aria-label="See 45 year milestone count"></button>
+          <button class="balloon-hotspot balloon-50" type="button" data-years="50" data-count="2"    aria-label="See 50 year milestone count"></button>
+        </div>
+
+        <p class="anniversary-summary">Celebrating over 16,000 Associates for their dedication and service.</p>
+
+        <div class="links">
+          <a class="section-link" href="#">Recognition details</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="shoes-for-crews" class="section reveal">
+      <div class="section-head">
+        <h2>Shoes For Crews</h2>
+      </div>
+
+      <div class="section-image-wrap">
+        <div class="section-image-link lightbox-trigger">
+          <img src="Images/Shoes for Crews.png" alt="Shoes For Crews Collection" />
+        </div>
+
+        <p>Don’t need a new pair? Pay it forward! Use your credit to grab shoes for a coworker (see FAQs for steps).</p>
+
+        <div class="links">
+          <a class="section-link" href="https://www.shoesforcrews.com/wafflehouse">Shop Now!</a>
+          <a class="section-link secondary" href="PDFs/Shoes for Crews FAQs.pdf">View FAQs</a>
         </div>
       </div>
     </section>
@@ -756,6 +893,15 @@
     <div class="lightbox-inner">
       <button class="lightbox-close" type="button" aria-label="Close image">&times;</button>
       <img id="lightbox-image" src="" alt="" />
+    </div>
+  </div>
+
+  <div class="milestone-modal" id="milestone-modal" aria-hidden="true">
+    <div class="milestone-modal-inner">
+      <button class="milestone-close" type="button" aria-label="Close milestone">&times;</button>
+      <div class="milestone-badge">Anniversary Milestone</div>
+      <h3 id="milestone-title">10 Years</h3>
+      <p id="milestone-text">651 associates are celebrating 10 years of service.</p>
     </div>
   </div>
 
@@ -880,6 +1026,58 @@
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && lightbox?.classList.contains("open")) {
           closeLightbox();
+        }
+      });
+
+      const milestoneModal = document.getElementById("milestone-modal");
+      const milestoneTitle = document.getElementById("milestone-title");
+      const milestoneText = document.getElementById("milestone-text");
+      const milestoneClose = document.querySelector(".milestone-close");
+      const balloonHotspots = document.querySelectorAll(".balloon-hotspot");
+
+      const formatCount = (count) => Number(count).toLocaleString();
+
+      const openMilestoneModal = (years, count) => {
+        milestoneTitle.textContent = `${years} Year${years === "1" ? "" : "s"}`;
+        milestoneText.textContent = `${formatCount(count)} associates are celebrating ${years} year${years === "1" ? "" : "s"} of service.`;
+        milestoneModal.classList.add("open");
+        milestoneModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("milestone-open");
+      };
+
+      const closeMilestoneModal = () => {
+        milestoneModal.classList.remove("open");
+        milestoneModal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("milestone-open");
+      };
+
+      balloonHotspots.forEach((spot) => {
+        const years = spot.dataset.years;
+        const count = spot.dataset.count;
+
+        spot.addEventListener("click", () => {
+          openMilestoneModal(years, count);
+        });
+
+        spot.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openMilestoneModal(years, count);
+          }
+        });
+      });
+
+      milestoneClose?.addEventListener("click", closeMilestoneModal);
+
+      milestoneModal?.addEventListener("click", (e) => {
+        if (e.target === milestoneModal) {
+          closeMilestoneModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && milestoneModal?.classList.contains("open")) {
+          closeMilestoneModal();
         }
       });
     });
