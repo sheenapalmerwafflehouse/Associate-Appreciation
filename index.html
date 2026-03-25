@@ -1037,13 +1037,19 @@
 
       const formatCount = (count) => Number(count).toLocaleString();
 
-      const openMilestoneModal = (years, count) => {
-        milestoneTitle.textContent = `${years} Year${years === "1" ? "" : "s"}`;
-        milestoneText.textContent = `${formatCount(count)} associates are celebrating ${years} year${years === "1" ? "" : "s"} of service.`;
-        milestoneModal.classList.add("open");
-        milestoneModal.setAttribute("aria-hidden", "false");
-        document.body.classList.add("milestone-open");
-      };
+     const openMilestoneModal = (years, count) => {
+  const numericCount = Number(count);
+  const associateWord = numericCount === 1 ? "Associate" : "Associates";
+  const verbWord = numericCount === 1 ? "is" : "are";
+  const yearWord = years === "1" ? "year" : "years";
+
+  milestoneTitle.textContent = `${years} ${yearWord}`;
+  milestoneText.textContent = `${formatCount(numericCount)} ${AssociateWord} ${verbWord} celebrating ${years} ${yearWord} of service.`;
+
+  milestoneModal.classList.add("open");
+  milestoneModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("milestone-open");
+};
 
       const closeMilestoneModal = () => {
         milestoneModal.classList.remove("open");
