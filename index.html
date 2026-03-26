@@ -1373,21 +1373,26 @@
         audioCard?.classList.add("animate");
       }
 
-      const fireConfetti = () => {
-        if (confettiFired || prefersReducedMotion || typeof confetti !== "function") return;
-        confettiFired = true;
+    const fireConfetti = () => {
+  if (confettiFired || prefersReducedMotion || typeof confetti !== "function") return;
 
-        confetti({
-          particleCount: 110,
-          spread: 78,
-          startVelocity: 34,
-          origin: { y: 0.28 }
-        });
-      };
+  confetti({
+    particleCount: 110,
+    spread: 78,
+    startVelocity: 34,
+    origin: { y: 0.28 }
+  });
 
-      setTimeout(fireConfetti, 500);
-      window.addEventListener("touchstart", fireConfetti, { once: true, passive: true });
-      window.addEventListener("click", fireConfetti, { once: true, passive: true });
+  confettiFired = true;
+};
+
+window.addEventListener("load", () => {
+  setTimeout(fireConfetti, 900);
+});
+
+window.addEventListener("touchstart", fireConfetti, { once: true, passive: true });
+window.addEventListener("click", fireConfetti, { once: true, passive: true });
+
 
       const openLightbox = (img) => {
         lightboxImage.src = img.src;
