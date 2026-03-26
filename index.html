@@ -16,7 +16,7 @@
       --yellow-soft: #fff7c8;
       --green-tint: #f0f6df;
       --border: rgba(0, 0, 0, 0.08);
-      --shadow: 0 12px 28px rgba(0,0,0,.08);
+      --shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
       --radius: 20px;
       --max: 1120px;
     }
@@ -67,7 +67,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255,255,255,.92);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
     }
@@ -109,11 +109,15 @@
       max-width: 900px;
       margin: 0 auto 28px;
       padding: 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(240,246,223,.5));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(240, 246, 223, 0.5));
       border: 1px solid var(--border);
       border-radius: 26px;
       box-shadow: var(--shadow);
-      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease, opacity 0.7s ease;
+      transition:
+        transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+        box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+        border-color 0.4s ease,
+        opacity 0.7s ease;
       position: relative;
       overflow: hidden;
     }
@@ -146,7 +150,7 @@
     .section h2 {
       margin: 0;
       text-transform: uppercase;
-      letter-spacing: .04em;
+      letter-spacing: 0.04em;
       font-size: clamp(1.18rem, 2vw, 1.8rem);
       text-align: center;
     }
@@ -154,7 +158,9 @@
     .section p {
       color: var(--muted);
       line-height: 1.65;
-      margin: 12px 0 16px;
+      margin: 14px auto 18px;
+      max-width: 680px;
+      text-align: center;
     }
 
     .section-image-wrap {
@@ -175,7 +181,7 @@
     .section-image-link img {
       width: 100%;
       height: auto;
-      transition: transform .4s ease;
+      transition: transform 0.4s ease;
     }
 
     .section-image-link:hover img {
@@ -191,7 +197,7 @@
       gap: 12px;
       flex-wrap: wrap;
       margin-top: 12px;
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     .pill,
@@ -203,8 +209,8 @@
       border-radius: 999px;
       font-weight: 700;
       border: 1px solid var(--border);
-      box-shadow: 0 2px 0 rgba(0,0,0,.08);
-      transition: all .18s ease;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+      transition: all 0.18s ease;
       display: inline-block;
       text-align: center;
     }
@@ -212,7 +218,7 @@
     .pill:hover,
     .section-link:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(0,0,0,.10);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       background: #ffe66a;
     }
 
@@ -227,7 +233,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: left;
+      text-align: center;
       max-width: 760px;
       width: 100%;
       position: relative;
@@ -251,21 +257,23 @@
     #hero .eyebrow {
       display: block;
       text-transform: uppercase;
-      letter-spacing: .2em;
-      font-size: 12px;
+      letter-spacing: 0.16em;
+      font-size: clamp(12px, 1.7vw, 18px);
+      line-height: 1.25;
       color: #7b6c00;
       font-weight: 800;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       white-space: normal;
     }
 
     #hero h1 {
       margin: 0;
       font-size: clamp(32px, 4vw, 56px);
-      line-height: 1;
+      line-height: 0.98;
       text-transform: uppercase;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.03em;
       text-align: center;
+      text-wrap: balance;
     }
 
     .hero-image {
@@ -300,7 +308,7 @@
       border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 22px;
       background: linear-gradient(180deg, #fffdf2 0%, #f7f8e8 50%, #f1f6dc 100%);
-      box-shadow: 0 10px 24px rgba(0,0,0,.06);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
       text-align: center;
       opacity: 0;
       transform: translateY(20px);
@@ -316,12 +324,13 @@
       margin: 0 0 8px;
       font-size: 1.05rem;
       text-transform: uppercase;
-      letter-spacing: .05em;
+      letter-spacing: 0.05em;
     }
 
     .audio-card p {
       margin: 0 0 14px;
       color: var(--muted);
+      text-align: center;
     }
 
     .audio-player-wrap {
@@ -329,21 +338,21 @@
       margin: 0 auto;
       padding: 12px 14px;
       background: linear-gradient(180deg, #ffe66a 0%, var(--yellow) 100%);
-      border: 1px solid rgba(0,0,0,.08);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 999px;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.75),
-        0 2px 0 rgba(0,0,0,.08),
-        0 10px 18px rgba(0,0,0,.10);
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+        inset 0 1px 0 rgba(255, 255, 255, 0.75),
+        0 2px 0 rgba(0, 0, 0, 0.08),
+        0 10px 18px rgba(0, 0, 0, 0.1);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
     }
 
     .audio-player-wrap:hover {
       transform: translateY(-2px);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.8),
-        0 2px 0 rgba(0,0,0,.08),
-        0 14px 24px rgba(0,0,0,.14);
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 2px 0 rgba(0, 0, 0, 0.08),
+        0 14px 24px rgba(0, 0, 0, 0.14);
       background: linear-gradient(180deg, #fff07f 0%, #ffe15a 100%);
     }
 
@@ -440,7 +449,7 @@
       inset: -8%;
       border-radius: 50%;
       background: rgba(245, 213, 71, 0);
-      transition: background .18s ease, transform .18s ease;
+      transition: background 0.18s ease, transform 0.18s ease;
     }
 
     .balloon-hotspot:hover::after,
@@ -450,7 +459,6 @@
       transform: scale(1.06);
     }
 
-    /* Top row */
     .balloon-1  { top: 7.5%;  left: 10.2%; }
     .balloon-2  { top: 5.2%;  left: 20.8%; }
     .balloon-3  { top: 6.1%;  left: 32.0%; }
@@ -459,7 +467,6 @@
     .balloon-10 { top: 4.8%;  left: 65.2%; }
     .balloon-15 { top: 8.0%;  left: 76.0%; }
 
-    /* Bottom row */
     .balloon-20 { top: 20.8%; left: 9.0%; }
     .balloon-25 { top: 17.2%; left: 20.8%; }
     .balloon-30 { top: 18.0%; left: 32.2%; }
@@ -483,7 +490,7 @@
       text-align: center;
       color: var(--muted);
       padding: 0 18px 36px;
-      font-size: .94rem;
+      font-size: 0.94rem;
     }
 
     .lightbox,
@@ -498,7 +505,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity .25s ease, visibility .25s ease;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
       z-index: 5000;
     }
 
@@ -513,8 +520,8 @@
       position: relative;
       max-width: min(1100px, 96vw);
       max-height: 92vh;
-      transform: scale(.96);
-      transition: transform .25s ease;
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
     }
 
     .lightbox.open .lightbox-inner,
@@ -527,7 +534,7 @@
       max-width: 100%;
       max-height: 92vh;
       border-radius: 18px;
-      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
       background: #fff;
     }
 
@@ -545,20 +552,20 @@
       font-size: 24px;
       line-height: 1;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,.24);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
     }
 
     .milestone-modal-inner {
       position: relative;
       width: min(420px, 92vw);
       background: linear-gradient(180deg, #fffdf2 0%, #f7f8e8 50%, #f1f6dc 100%);
-      border: 1px solid rgba(0,0,0,.08);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 24px;
       padding: 28px 24px 24px;
-      box-shadow: 0 24px 60px rgba(0,0,0,.28);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
       text-align: center;
-      transform: scale(.96);
-      transition: transform .25s ease;
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
     }
 
     .milestone-badge {
@@ -569,9 +576,9 @@
       background: linear-gradient(180deg, #ffe66a 0%, var(--yellow) 100%);
       color: #111;
       font-weight: 800;
-      letter-spacing: .04em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      box-shadow: 0 6px 14px rgba(0,0,0,.10);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.10);
     }
 
     .milestone-modal h3 {
@@ -579,7 +586,7 @@
       font-size: clamp(1.25rem, 3vw, 1.7rem);
       line-height: 1.1;
       text-transform: uppercase;
-      letter-spacing: .03em;
+      letter-spacing: 0.03em;
     }
 
     .milestone-modal p {
@@ -614,7 +621,7 @@
       }
 
       .section {
-        padding: 12px;
+        padding: 14px 12px;
         border-radius: 22px;
       }
 
@@ -638,11 +645,22 @@
 
       #hero .eyebrow {
         font-size: 11px;
-        letter-spacing: .18em;
+        letter-spacing: 0.12em;
+        margin-bottom: 8px;
       }
 
       #hero h1 {
         font-size: clamp(28px, 8vw, 42px);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+
+      .section p,
+      .anniversary-summary,
+      .audio-card p {
+        max-width: 100%;
+        padding-inline: 6px;
+        text-align: center;
       }
 
       .audio-player-wrap {
@@ -722,7 +740,13 @@
           <p>Click to listen.</p>
 
           <div class="audio-player-wrap">
-            <audio class="audio-player" controls preload="metadata">
+            <audio
+              class="audio-player"
+              controls
+              controlsList="nodownload noplaybackrate"
+              preload="metadata"
+              oncontextmenu="return false;"
+            >
               <source src="Audio/appreciationsong.mp3" type="audio/mpeg" />
               Your browser does not support the audio element.
             </audio>
@@ -785,7 +809,12 @@
         <p>Watch the museum tour video, then test your knowledge for a chance to win exclusive raffle prizes.</p>
 
         <div class="links">
-          <a class="section-link" href="https://www.surveymonkey.com/survey-closed/?sm=WRpY9sKAVbCOt7H_2BORYWi1mG0A13IZOgdEjfuVEg9sTvMJz6ZNt8Uk7mIiFJLmyv9nxqZPack_2B6G4x4Pi9_2BsZvemUitAedxeftnG73RhJcVqDhuLwOAhCb7wPj4KQcrOrY_2F57SsHyO6azNUydTn_2F0g_3D_3D">
+          <a
+            class="section-link"
+            href="https://www.surveymonkey.com/survey-closed/?sm=WRpY9sKAVbCOt7H_2BORYWi1mG0A13IZOgdEjfuVEg9sTvMJz6ZNt8Uk7mIiFJLmyv9nxqZPack_2B6G4x4Pi9_2BsZvemUitAedxeftnG73RhJcVqDhuLwOAhCb7wPj4KQcrOrY_2F57SsHyO6azNUydTn_2F0g_3D_3D"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Ready for Trivia?
           </a>
         </div>
@@ -805,7 +834,14 @@
         <p>Upload your best photos to enter.</p>
 
         <div class="links">
-          <a class="section-link" href="https://form.jotform.com/260616390409053">Submission &amp; Contest Rules</a>
+          <a
+            class="section-link"
+            href="https://form.jotform.com/260616390409053"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Submission &amp; Contest Rules
+          </a>
         </div>
       </div>
     </section>
@@ -816,27 +852,28 @@
       </div>
 
       <div class="section-image-wrap anniversary-image">
-
         <div class="anniversary-interactive">
           <img src="Images/Anniversary Landing Page Graphic (8).png" alt="Anniversaries" />
 
-          <button class="balloon-hotspot balloon-1"  type="button" data-years="1"  data-count="6248" aria-label="See 1 year milestone count"></button>
-          <button class="balloon-hotspot balloon-2"  type="button" data-years="2"  data-count="3650" aria-label="See 2 year milestone count"></button>
-          <button class="balloon-hotspot balloon-3"  type="button" data-years="3"  data-count="2293" aria-label="See 3 year milestone count"></button>
-          <button class="balloon-hotspot balloon-4"  type="button" data-years="4"  data-count="1793" aria-label="See 4 year milestone count"></button>
-          <button class="balloon-hotspot balloon-5"  type="button" data-years="5"  data-count="1345" aria-label="See 5 year milestone count"></button>
-          <button class="balloon-hotspot balloon-10" type="button" data-years="10" data-count="651"  aria-label="See 10 year milestone count"></button>
-          <button class="balloon-hotspot balloon-15" type="button" data-years="15" data-count="290"  aria-label="See 15 year milestone count"></button>
-          <button class="balloon-hotspot balloon-20" type="button" data-years="20" data-count="141"  aria-label="See 20 year milestone count"></button>
-          <button class="balloon-hotspot balloon-25" type="button" data-years="25" data-count="58"   aria-label="See 25 year milestone count"></button>
-          <button class="balloon-hotspot balloon-30" type="button" data-years="30" data-count="20"   aria-label="See 30 year milestone count"></button>
-          <button class="balloon-hotspot balloon-35" type="button" data-years="35" data-count="5"    aria-label="See 35 year milestone count"></button>
-          <button class="balloon-hotspot balloon-40" type="button" data-years="40" data-count="4"    aria-label="See 40 year milestone count"></button>
-          <button class="balloon-hotspot balloon-45" type="button" data-years="45" data-count="1"    aria-label="See 45 year milestone count"></button>
-          <button class="balloon-hotspot balloon-50" type="button" data-years="50" data-count="2"    aria-label="See 50 year milestone count"></button>
+          <button class="balloon-hotspot balloon-1" type="button" data-years="1" data-count="6248" aria-label="See 1 year milestone count"></button>
+          <button class="balloon-hotspot balloon-2" type="button" data-years="2" data-count="3650" aria-label="See 2 year milestone count"></button>
+          <button class="balloon-hotspot balloon-3" type="button" data-years="3" data-count="2293" aria-label="See 3 year milestone count"></button>
+          <button class="balloon-hotspot balloon-4" type="button" data-years="4" data-count="1793" aria-label="See 4 year milestone count"></button>
+          <button class="balloon-hotspot balloon-5" type="button" data-years="5" data-count="1345" aria-label="See 5 year milestone count"></button>
+          <button class="balloon-hotspot balloon-10" type="button" data-years="10" data-count="651" aria-label="See 10 year milestone count"></button>
+          <button class="balloon-hotspot balloon-15" type="button" data-years="15" data-count="290" aria-label="See 15 year milestone count"></button>
+          <button class="balloon-hotspot balloon-20" type="button" data-years="20" data-count="141" aria-label="See 20 year milestone count"></button>
+          <button class="balloon-hotspot balloon-25" type="button" data-years="25" data-count="58" aria-label="See 25 year milestone count"></button>
+          <button class="balloon-hotspot balloon-30" type="button" data-years="30" data-count="20" aria-label="See 30 year milestone count"></button>
+          <button class="balloon-hotspot balloon-35" type="button" data-years="35" data-count="5" aria-label="See 35 year milestone count"></button>
+          <button class="balloon-hotspot balloon-40" type="button" data-years="40" data-count="4" aria-label="See 40 year milestone count"></button>
+          <button class="balloon-hotspot balloon-45" type="button" data-years="45" data-count="1" aria-label="See 45 year milestone count"></button>
+          <button class="balloon-hotspot balloon-50" type="button" data-years="50" data-count="2" aria-label="See 50 year milestone count"></button>
         </div>
 
-        <p class="anniversary-summary">Celebrating over 16,000 Associates for their dedication and service! Click on the balloons to see how many are celebrating each milestone.</p>
+        <p class="anniversary-summary">
+          Celebrating over 16,000 Associates for their dedication and service! Click on the balloons to see how many are celebrating each milestone.
+        </p>
 
         <div class="links">
           <a class="section-link" href="#">Recognition details</a>
@@ -857,7 +894,14 @@
         <p>Don’t need a new pair? Pay it forward! Use your credit to grab shoes for a coworker (see FAQs for steps).</p>
 
         <div class="links">
-          <a class="section-link" href="https://www.shoesforcrews.com/wafflehouse">Shop Now!</a>
+          <a
+            class="section-link"
+            href="https://www.shoesforcrews.com/wafflehouse"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Shop Now!
+          </a>
           <a class="section-link secondary" href="PDFs/Shoes for Crews FAQs.pdf">View FAQs</a>
         </div>
       </div>
@@ -876,8 +920,22 @@
         <p>Enjoy free credits on the House because your hospitality is like music to our ears.</p>
 
         <div class="links">
-          <a class="section-link" href="https://www.touchtunes.com/play/app" rel="noopener noreferrer">Download the App</a>
-          <a class="section-link secondary" href="https://touchtunes.helpshift.com/hc/en/8-touchtunes/?p=all" rel="noopener noreferrer">App Help</a>
+          <a
+            class="section-link"
+            href="https://www.touchtunes.com/play/app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download the App
+          </a>
+          <a
+            class="section-link secondary"
+            href="https://touchtunes.helpshift.com/hc/en/8-touchtunes/?p=all"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            App Help
+          </a>
         </div>
       </div>
     </section>
@@ -1037,18 +1095,18 @@
       const formatCount = (count) => Number(count).toLocaleString();
 
       const openMilestoneModal = (years, count) => {
-  const numericCount = Number(count);
-  const associateWord = numericCount === 1 ? "Associate" : "Associates";
-  const verbWord = numericCount === 1 ? "is" : "are";
-  const yearWord = years === "1" ? "year" : "years";
+        const numericCount = Number(count);
+        const associateWord = numericCount === 1 ? "Associate" : "Associates";
+        const verbWord = numericCount === 1 ? "is" : "are";
+        const yearWord = years === "1" ? "year" : "years";
 
-  milestoneTitle.textContent = `${years} ${yearWord}`;
-  milestoneText.textContent = `${formatCount(numericCount)} ${associateWord} ${verbWord} celebrating ${years} ${yearWord} of service.`;
+        milestoneTitle.textContent = `${years} ${yearWord}`;
+        milestoneText.textContent = `${formatCount(numericCount)} ${associateWord} ${verbWord} celebrating ${years} ${yearWord} of service.`;
 
-  milestoneModal.classList.add("open");
-  milestoneModal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("milestone-open");
-};
+        milestoneModal.classList.add("open");
+        milestoneModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("milestone-open");
+      };
 
       const closeMilestoneModal = () => {
         milestoneModal.classList.remove("open");
@@ -1085,6 +1143,9 @@
           closeMilestoneModal();
         }
       });
+
+      const audioPlayer = document.querySelector(".audio-player");
+      audioPlayer?.addEventListener("contextmenu", (e) => e.preventDefault());
     });
   </script>
 </body>
