@@ -21,6 +21,7 @@
       --max: 1120px;
       --media-width: 560px;
       --media-frame-min-height: 320px;
+      --page-warmth: 0;
     }
 
     * {
@@ -29,14 +30,22 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 80px;
+      scroll-padding-top: 92px;
+      scroll-snap-type: y proximity;
     }
 
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at top left, #faf9ee 0%, #f6f6f4 38%, #efefe9 100%);
+      background:
+        radial-gradient(
+          circle at top left,
+          color-mix(in srgb, #faf9ee calc(100% - (var(--page-warmth) * 22%)), #fff3bf calc(var(--page-warmth) * 22%)) 0%,
+          color-mix(in srgb, #f6f6f4 calc(100% - (var(--page-warmth) * 18%)), #fff0b0 calc(var(--page-warmth) * 18%)) 38%,
+          color-mix(in srgb, #efefe9 calc(100% - (var(--page-warmth) * 12%)), #f4edd3 calc(var(--page-warmth) * 12%)) 100%
+        );
+      transition: background 0.35s ease;
     }
 
     body.lightbox-open,
@@ -119,15 +128,31 @@
         transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
         box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
         border-color 0.4s ease,
-        opacity 0.7s ease;
+        opacity 0.7s ease,
+        filter 0.3s ease;
       position: relative;
       overflow: hidden;
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+      transform-origin: center center;
     }
 
     .section:hover {
       transform: translateY(-8px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
       border-color: var(--yellow);
+    }
+
+    .section.section-focus {
+      transform: translateY(-6px) scale(1.012);
+      border-color: rgba(245, 213, 71, 0.9);
+      box-shadow: 0 22px 44px rgba(0, 0, 0, 0.14);
+      z-index: 2;
+    }
+
+    .section.section-dim {
+      opacity: 0.72;
+      filter: saturate(0.92);
     }
 
     .reveal {
@@ -179,6 +204,7 @@
       border: 1px solid var(--border);
       background: white;
       cursor: zoom-in;
+      position: relative;
     }
 
     .media-frame {
@@ -188,6 +214,46 @@
       align-items: center;
       justify-content: center;
       background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .media-frame::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -140%;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(
+        115deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.18) 40%,
+        rgba(255, 255, 255, 0.55) 50%,
+        rgba(255, 255, 255, 0.14) 60%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-18deg);
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .section-image-link:hover .media-frame::after,
+    .section-image-link:focus-visible .media-frame::after,
+    .section-image-link.shine-active .media-frame::after,
+    .anniversary-image-layer.shine-active .media-frame::after,
+    .anniversary-interactive:hover .anniversary-image-layer .media-frame::after {
+      opacity: 1;
+      animation: shineSweep 1.1s ease;
+    }
+
+    @keyframes shineSweep {
+      0% {
+        left: -140%;
+      }
+      100% {
+        left: 150%;
+      }
     }
 
     .media-frame img {
@@ -222,6 +288,8 @@
       transition: all 0.18s ease;
       display: inline-block;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
     .pill:hover,
@@ -321,12 +389,42 @@
       text-align: center;
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .audio-card.animate {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .audio-card.audio-playing {
+      border-color: rgba(245, 213, 71, 0.9);
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(245, 213, 71, 0.45),
+        0 0 28px rgba(245, 213, 71, 0.2);
+    }
+
+    .audio-card.audio-playing::before {
+      content: "";
+      position: absolute;
+      inset: -25%;
+      background: radial-gradient(circle, rgba(245, 213, 71, 0.18) 0%, rgba(245, 213, 71, 0.05) 34%, rgba(245, 213, 71, 0) 68%);
+      animation: audioPulseGlow 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes audioPulseGlow {
+      0%, 100% {
+        transform: scale(0.92);
+        opacity: 0.4;
+      }
+      50% {
+        transform: scale(1.02);
+        opacity: 0.85;
+      }
     }
 
     .audio-card h3 {
@@ -342,6 +440,39 @@
       text-align: center;
     }
 
+    .audio-visualizer {
+      width: 100%;
+      max-width: 180px;
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 5px;
+      height: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .audio-visualizer span {
+      width: 6px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffe66a 0%, #d4b000 100%);
+      transform-origin: bottom center;
+      opacity: 0.8;
+    }
+
+    .audio-card.audio-playing .audio-visualizer span:nth-child(1) { animation: equalizerBounce 0.9s ease-in-out infinite; }
+    .audio-card.audio-playing .audio-visualizer span:nth-child(2) { animation: equalizerBounce 0.7s ease-in-out infinite 0.08s; }
+    .audio-card.audio-playing .audio-visualizer span:nth-child(3) { animation: equalizerBounce 1s ease-in-out infinite 0.16s; }
+    .audio-card.audio-playing .audio-visualizer span:nth-child(4) { animation: equalizerBounce 0.65s ease-in-out infinite 0.1s; }
+    .audio-card.audio-playing .audio-visualizer span:nth-child(5) { animation: equalizerBounce 0.82s ease-in-out infinite 0.04s; }
+
+    @keyframes equalizerBounce {
+      0%, 100% { transform: scaleY(0.55); opacity: 0.6; }
+      50% { transform: scaleY(2.6); opacity: 1; }
+    }
+
     .audio-player-wrap {
       max-width: 520px;
       margin: 0 auto;
@@ -354,6 +485,8 @@
         0 2px 0 rgba(0, 0, 0, 0.08),
         0 10px 18px rgba(0, 0, 0, 0.1);
       transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      position: relative;
+      z-index: 1;
     }
 
     .audio-player-wrap:hover {
@@ -462,6 +595,36 @@
       line-height: 1.5;
     }
 
+    .anniversary-tip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 247, 200, 0.95);
+      color: #6b5b00;
+      font-weight: 800;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+      border: 1px solid rgba(212, 176, 0, 0.18);
+      opacity: 0;
+      transform: translateY(10px) scale(0.96);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      translate: -50% 0;
+      z-index: 4500;
+      max-width: calc(100vw - 24px);
+      text-align: center;
+    }
+
+    .anniversary-tip.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
     .balloon-hotspot {
       position: absolute;
       width: 10.5%;
@@ -472,7 +635,7 @@
       cursor: pointer;
       pointer-events: auto;
       -webkit-tap-highlight-color: transparent;
-      transition: transform 0.22s ease;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
     }
 
     .balloon-hotspot:focus-visible {
@@ -497,7 +660,7 @@
       inset: -8%;
       border-radius: 50%;
       background: rgba(245, 213, 71, 0);
-      transition: background 0.18s ease, transform 0.18s ease;
+      transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
     }
 
     .balloon-hotspot:hover,
@@ -520,6 +683,23 @@
 
     .balloon-hotspot.popping {
       animation: balloonPop 0.22s ease;
+    }
+
+    .balloon-hotspot.hinting::after {
+      background: rgba(245, 213, 71, 0.12);
+      box-shadow: 0 0 0 0 rgba(245, 213, 71, 0.38);
+      animation: balloonHintPulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes balloonHintPulse {
+      0%, 100% {
+        transform: scale(0.96);
+        box-shadow: 0 0 0 0 rgba(245, 213, 71, 0.34);
+      }
+      50% {
+        transform: scale(1.14);
+        box-shadow: 0 0 0 12px rgba(245, 213, 71, 0);
+      }
     }
 
     @keyframes balloonPop {
@@ -555,8 +735,7 @@
     }
 
     @keyframes balloonFloat {
-      0%,
-      100% {
+      0%, 100% {
         transform: translateY(0);
       }
       50% {
@@ -725,6 +904,10 @@
         --media-frame-min-height: 260px;
       }
 
+      html {
+        scroll-snap-type: y proximity;
+      }
+
       .sections {
         padding: 12px;
       }
@@ -732,6 +915,7 @@
       .section {
         padding: 14px 12px;
         border-radius: 22px;
+        margin-bottom: 22px;
       }
 
       .hero-card {
@@ -804,11 +988,18 @@
       .milestone-modal-inner {
         padding: 26px 18px 20px;
       }
+
+      .anniversary-tip {
+        bottom: 14px;
+        font-size: 0.92rem;
+        padding: 9px 12px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
+        scroll-snap-type: none;
       }
 
       *,
@@ -852,9 +1043,17 @@
           <img src="Images/Intro graphic (1).png" alt="Associate Appreciation" />
         </div>
 
-        <div class="audio-card">
+        <div class="audio-card" id="audio-card">
           <h3>Appreciation Song</h3>
           <p>Click to listen.</p>
+
+          <div class="audio-visualizer" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
 
           <div class="audio-player-wrap">
             <audio
@@ -1090,25 +1289,58 @@
     </div>
   </div>
 
+  <div class="anniversary-tip" id="anniversary-tip" aria-hidden="true">
+    🎈 Tap the balloons to reveal milestone counts
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
+      const isMobile = window.matchMedia("(max-width: 640px)").matches;
       const progressBar = document.getElementById("scroll-progress");
+      const sections = Array.from(document.querySelectorAll(".section"));
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const lightboxClose = document.querySelector(".lightbox-close");
+      const milestoneModal = document.getElementById("milestone-modal");
+      const milestoneTitle = document.getElementById("milestone-title");
+      const milestoneText = document.getElementById("milestone-text");
+      const milestoneClose = document.querySelector(".milestone-close");
+      const balloonHotspots = document.querySelectorAll(".balloon-hotspot");
+      const audioPlayer = document.querySelector(".audio-player");
+      const audioCard = document.getElementById("audio-card");
+      const anniversaryTip = document.getElementById("anniversary-tip");
+      const triggers = document.querySelectorAll(".lightbox-trigger");
+      const revealItems = document.querySelectorAll(".reveal");
+
+      let sectionFocusTimer;
+      let confettiFired = false;
+      let nudgeTimer;
+      let tipShown = false;
+      let lastInteractionTime = Date.now();
+
+      const markInteraction = () => {
+        lastInteractionTime = Date.now();
+      };
+
+      ["scroll", "touchstart", "pointerdown", "mousemove", "keydown", "click"].forEach((eventName) => {
+        window.addEventListener(eventName, markInteraction, { passive: true });
+      });
 
       const updateProgressBar = () => {
         const scrollTop = window.scrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
         progressBar.style.width = progress + "%";
+
+        const warmth = Math.min(1, Math.max(0, progress / 100));
+        document.documentElement.style.setProperty("--page-warmth", warmth.toFixed(3));
       };
 
       updateProgressBar();
-      window.addEventListener("scroll", updateProgressBar);
-
-      const revealItems = document.querySelectorAll(".reveal");
+      window.addEventListener("scroll", updateProgressBar, { passive: true });
 
       if (!prefersReducedMotion && "IntersectionObserver" in window) {
         const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -1130,7 +1362,6 @@
 
       const heroCopy = document.querySelector(".hero-copy");
       const heroImage = document.querySelector(".hero-image");
-      const audioCard = document.querySelector(".audio-card");
 
       if (!prefersReducedMotion) {
         setTimeout(() => heroCopy?.classList.add("animate"), 100);
@@ -1141,8 +1372,6 @@
         heroImage?.classList.add("animate");
         audioCard?.classList.add("animate");
       }
-
-      let confettiFired = false;
 
       const fireConfetti = () => {
         if (confettiFired || prefersReducedMotion || typeof confetti !== "function") return;
@@ -1159,11 +1388,6 @@
       setTimeout(fireConfetti, 500);
       window.addEventListener("touchstart", fireConfetti, { once: true, passive: true });
       window.addEventListener("click", fireConfetti, { once: true, passive: true });
-
-      const lightbox = document.getElementById("lightbox");
-      const lightboxImage = document.getElementById("lightbox-image");
-      const lightboxClose = document.querySelector(".lightbox-close");
-      const triggers = document.querySelectorAll(".lightbox-trigger");
 
       const openLightbox = (img) => {
         lightboxImage.src = img.src;
@@ -1213,12 +1437,6 @@
           closeLightbox();
         }
       });
-
-      const milestoneModal = document.getElementById("milestone-modal");
-      const milestoneTitle = document.getElementById("milestone-title");
-      const milestoneText = document.getElementById("milestone-text");
-      const milestoneClose = document.querySelector(".milestone-close");
-      const balloonHotspots = document.querySelectorAll(".balloon-hotspot");
 
       const formatCount = (count) => Number(count).toLocaleString();
 
@@ -1273,6 +1491,9 @@
 
         spot.addEventListener("click", (e) => {
           e.stopPropagation();
+          markInteraction();
+          hideAnniversaryTip();
+          spot.classList.remove("hinting");
           popBalloonEffect(spot);
           setTimeout(() => openMilestoneModal(years, count), 90);
         });
@@ -1281,6 +1502,9 @@
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             e.stopPropagation();
+            markInteraction();
+            hideAnniversaryTip();
+            spot.classList.remove("hinting");
             popBalloonEffect(spot);
             setTimeout(() => openMilestoneModal(years, count), 90);
           }
@@ -1301,8 +1525,145 @@
         }
       });
 
-      const audioPlayer = document.querySelector(".audio-player");
       audioPlayer?.addEventListener("contextmenu", (e) => e.preventDefault());
+
+      const syncAudioState = () => {
+        if (!audioPlayer || !audioCard) return;
+        if (!audioPlayer.paused && !audioPlayer.ended) {
+          audioCard.classList.add("audio-playing");
+        } else {
+          audioCard.classList.remove("audio-playing");
+        }
+      };
+
+      audioPlayer?.addEventListener("play", syncAudioState);
+      audioPlayer?.addEventListener("pause", syncAudioState);
+      audioPlayer?.addEventListener("ended", syncAudioState);
+
+      const activateSectionFocus = (activeSection) => {
+        sections.forEach((section) => {
+          const isActive = section === activeSection;
+          section.classList.toggle("section-focus", isActive);
+          section.classList.toggle("section-dim", !isActive);
+        });
+
+        clearTimeout(sectionFocusTimer);
+        sectionFocusTimer = setTimeout(() => {
+          sections.forEach((section) => {
+            section.classList.remove("section-focus", "section-dim");
+          });
+        }, 1300);
+      };
+
+      sections.forEach((section) => {
+        section.addEventListener("pointerdown", (e) => {
+          if (lightbox.classList.contains("open") || milestoneModal.classList.contains("open")) return;
+          const target = e.target;
+          if (target.closest(".balloon-hotspot") || target.closest(".section-link") || target.closest(".lightbox-close") || target.closest(".milestone-close")) return;
+          activateSectionFocus(section);
+        }, { passive: true });
+      });
+
+      const shineTargets = [
+        ...document.querySelectorAll(".section-image-link"),
+        ...document.querySelectorAll(".anniversary-image-layer")
+      ];
+
+      if (!prefersReducedMotion) {
+        shineTargets.forEach((target, index) => {
+          setTimeout(() => {
+            target.classList.add("shine-active");
+            setTimeout(() => target.classList.remove("shine-active"), 1200);
+          }, 1300 + (index * 180));
+        });
+
+        setInterval(() => {
+          const visibleTarget = shineTargets.find((el) => {
+            const rect = el.getBoundingClientRect();
+            return rect.top < window.innerHeight * 0.85 && rect.bottom > window.innerHeight * 0.15;
+          });
+          if (visibleTarget) {
+            visibleTarget.classList.add("shine-active");
+            setTimeout(() => visibleTarget.classList.remove("shine-active"), 1200);
+          }
+        }, 8500);
+      }
+
+      const showAnniversaryTip = () => {
+        if (!anniversaryTip || tipShown || prefersReducedMotion) return;
+        anniversaryTip.classList.add("show");
+        anniversaryTip.setAttribute("aria-hidden", "false");
+        tipShown = true;
+        setTimeout(hideAnniversaryTip, 3000);
+      };
+
+      const hideAnniversaryTip = () => {
+        if (!anniversaryTip) return;
+        anniversaryTip.classList.remove("show");
+        anniversaryTip.setAttribute("aria-hidden", "true");
+      };
+
+      const anniversarySection = document.getElementById("anniversaries");
+
+      if (anniversarySection && "IntersectionObserver" in window) {
+        const anniversaryObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (isMobile) showAnniversaryTip();
+              const hintTargets = Array.from(balloonHotspots).slice(1, 3);
+              hintTargets.forEach((spot, idx) => {
+                setTimeout(() => spot.classList.add("hinting"), idx * 240);
+              });
+              setTimeout(() => {
+                hintTargets.forEach((spot) => spot.classList.remove("hinting"));
+              }, 3400);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.42 });
+
+        anniversaryObserver.observe(anniversarySection);
+      }
+
+      const runIdleNudge = () => {
+        clearTimeout(nudgeTimer);
+        nudgeTimer = setTimeout(() => {
+          if (Date.now() - lastInteractionTime < 5500) {
+            runIdleNudge();
+            return;
+          }
+
+          const anniversaryInView = anniversarySection && (() => {
+            const rect = anniversarySection.getBoundingClientRect();
+            return rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.18;
+          })();
+
+          if (anniversaryInView) {
+            const nudgeSpot = balloonHotspots[0];
+            nudgeSpot?.classList.add("hinting");
+            if (isMobile) showAnniversaryTip();
+            setTimeout(() => nudgeSpot?.classList.remove("hinting"), 2200);
+          } else {
+            const visibleButton = document.querySelector(".section:not(.section-dim) .section-link, .section-link");
+            if (visibleButton && !prefersReducedMotion) {
+              visibleButton.animate([
+                { transform: "translateY(0)" },
+                { transform: "translateY(-3px)" },
+                { transform: "translateY(0)" }
+              ], {
+                duration: 520,
+                easing: "ease-out"
+              });
+            }
+          }
+
+          runIdleNudge();
+        }, 6200);
+      };
+
+      if (!prefersReducedMotion) {
+        runIdleNudge();
+      }
     });
   </script>
 </body>
