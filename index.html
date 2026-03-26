@@ -7,21 +7,27 @@
 
   <style>
     :root {
-      --bg: #f3f3f1;
-      --card: #ffffff;
+      --bg: #f6f1df;
+      --bg-warm: #fff6cf;
+      --card: rgba(255, 255, 255, 0.88);
+      --card-strong: #ffffff;
       --text: #111111;
-      --muted: #5e5e5e;
+      --muted: #4f4f4f;
+      --muted-soft: #676767;
       --yellow: #f5d547;
       --yellow-dark: #d4b000;
       --yellow-soft: #fff7c8;
       --green-tint: #f0f6df;
-      --border: rgba(0, 0, 0, 0.08);
-      --shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-      --radius: 20px;
+      --border: rgba(176, 150, 44, 0.18);
+      --border-strong: rgba(212, 176, 0, 0.36);
+      --shadow: 0 10px 24px rgba(92, 77, 19, 0.08);
+      --shadow-hover: 0 18px 38px rgba(92, 77, 19, 0.12);
+      --radius: 24px;
       --max: 1120px;
       --media-width: 560px;
       --media-frame-min-height: 320px;
       --page-warmth: 0;
+      --mobile-copy-width: 31ch;
     }
 
     * {
@@ -30,7 +36,7 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 92px;
+      scroll-padding-top: 96px;
       scroll-snap-type: y proximity;
     }
 
@@ -41,11 +47,26 @@
       background:
         radial-gradient(
           circle at top left,
-          color-mix(in srgb, #faf9ee calc(100% - (var(--page-warmth) * 22%)), #fff3bf calc(var(--page-warmth) * 22%)) 0%,
-          color-mix(in srgb, #f6f6f4 calc(100% - (var(--page-warmth) * 18%)), #fff0b0 calc(var(--page-warmth) * 18%)) 38%,
-          color-mix(in srgb, #efefe9 calc(100% - (var(--page-warmth) * 12%)), #f4edd3 calc(var(--page-warmth) * 12%)) 100%
+          color-mix(in srgb, #fffdf3 calc(100% - (var(--page-warmth) * 16%)), #fff2b1 calc(var(--page-warmth) * 16%)) 0%,
+          color-mix(in srgb, #f9f5e9 calc(100% - (var(--page-warmth) * 18%)), #fff1b5 calc(var(--page-warmth) * 18%)) 32%,
+          color-mix(in srgb, #f3efdf calc(100% - (var(--page-warmth) * 16%)), #f6e8b4 calc(var(--page-warmth) * 16%)) 100%
         );
+      position: relative;
+      min-height: 100vh;
       transition: background 0.35s ease;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background:
+        radial-gradient(circle at 12% 16%, rgba(255, 237, 152, 0.28) 0%, rgba(255, 237, 152, 0) 20%),
+        radial-gradient(circle at 84% 10%, rgba(255, 232, 131, 0.2) 0%, rgba(255, 232, 131, 0) 16%),
+        radial-gradient(circle at 86% 72%, rgba(245, 213, 71, 0.15) 0%, rgba(245, 213, 71, 0) 18%);
+      z-index: -1;
     }
 
     body.lightbox-open,
@@ -78,15 +99,16 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(176, 150, 44, 0.14);
+      box-shadow: 0 4px 16px rgba(92, 77, 19, 0.05);
     }
 
     .topbar-inner {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 8px 16px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -112,24 +134,25 @@
     .sections {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 16px;
+      padding: 24px 24px 18px;
     }
 
     .section {
       width: 100%;
       max-width: 900px;
-      margin: 0 auto 28px;
-      padding: 16px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(240, 246, 223, 0.5));
+      margin: 0 auto 30px;
+      padding: 22px 20px 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(247, 249, 235, 0.72));
       border: 1px solid var(--border);
-      border-radius: 26px;
+      border-radius: 28px;
       box-shadow: var(--shadow);
       transition:
         transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
         box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-        border-color 0.4s ease,
+        border-color 0.35s ease,
         opacity 0.7s ease,
-        filter 0.3s ease;
+        filter 0.3s ease,
+        background 0.35s ease;
       position: relative;
       overflow: hidden;
       scroll-snap-align: start;
@@ -137,22 +160,38 @@
       transform-origin: center center;
     }
 
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(245, 213, 71, 0), rgba(245, 213, 71, 0.45), rgba(245, 213, 71, 0));
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
     .section:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-      border-color: var(--yellow);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(212, 176, 0, 0.28);
     }
 
     .section.section-focus {
       transform: translateY(-6px) scale(1.012);
-      border-color: rgba(245, 213, 71, 0.9);
-      box-shadow: 0 22px 44px rgba(0, 0, 0, 0.14);
+      border-color: rgba(245, 213, 71, 0.65);
+      box-shadow: 0 22px 44px rgba(92, 77, 19, 0.14);
       z-index: 2;
     }
 
     .section.section-dim {
-      opacity: 0.72;
-      filter: saturate(0.92);
+      opacity: 0.76;
+      filter: saturate(0.93);
+    }
+
+    .section.featured-section {
+      border-color: rgba(245, 213, 71, 0.42);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(252, 248, 221, 0.82));
     }
 
     .reveal {
@@ -167,15 +206,34 @@
 
     .section-head {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
+      gap: 8px;
+      margin-bottom: 22px;
       flex-wrap: wrap;
     }
 
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      line-height: 1;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 247, 200, 0.92);
+      color: #6f5f00;
+      border: 1px solid rgba(212, 176, 0, 0.18);
+      box-shadow: 0 4px 12px rgba(92, 77, 19, 0.06);
+    }
+
     .section h2 {
-      margin: 0 0 4px;
+      margin: 0 0 2px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       font-size: clamp(1.18rem, 2vw, 1.8rem);
@@ -184,10 +242,11 @@
 
     .section p {
       color: var(--muted);
-      line-height: 1.75;
-      margin: 18px auto 22px;
-      max-width: 720px;
+      line-height: 1.78;
+      margin: 22px auto 0;
+      max-width: 40ch;
       text-align: center;
+      font-size: 1rem;
     }
 
     .section-image-wrap {
@@ -199,12 +258,13 @@
     .section-image-link {
       display: block;
       width: 100%;
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid var(--border);
-      background: white;
+      border: 1px solid rgba(176, 150, 44, 0.14);
+      background: var(--card-strong);
       cursor: zoom-in;
       position: relative;
+      box-shadow: 0 8px 22px rgba(92, 77, 19, 0.06);
     }
 
     .media-frame {
@@ -213,9 +273,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #fff;
+      background: linear-gradient(180deg, #ffffff 0%, #fcfcf8 100%);
       position: relative;
       overflow: hidden;
+      border-radius: 20px;
     }
 
     .media-frame::after {
@@ -248,12 +309,8 @@
     }
 
     @keyframes shineSweep {
-      0% {
-        left: -140%;
-      }
-      100% {
-        left: 150%;
-      }
+      0% { left: -140%; }
+      100% { left: 150%; }
     }
 
     .media-frame img {
@@ -267,11 +324,15 @@
       transform: scale(1.03);
     }
 
+    .section-copy {
+      margin-top: 20px;
+    }
+
     .links {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 18px;
+      margin-top: 22px;
       justify-content: center;
     }
 
@@ -280,13 +341,18 @@
       text-decoration: none;
       color: #111;
       background: var(--yellow);
-      padding: 10px 16px;
+      padding: 12px 18px;
+      min-height: 46px;
       border-radius: 999px;
-      font-weight: 700;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+      font-weight: 800;
+      border: 1px solid rgba(176, 150, 44, 0.18);
+      box-shadow:
+        0 2px 0 rgba(92, 77, 19, 0.1),
+        0 8px 18px rgba(92, 77, 19, 0.08);
       transition: all 0.18s ease;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -295,16 +361,20 @@
     .pill:hover,
     .section-link:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      box-shadow:
+        0 2px 0 rgba(92, 77, 19, 0.1),
+        0 12px 22px rgba(92, 77, 19, 0.12);
       background: #ffe66a;
     }
 
     .section-link.secondary {
-      background: white;
+      background: rgba(255, 255, 255, 0.9);
+      color: #2b2b2b;
+      border-color: rgba(212, 176, 0, 0.28);
     }
 
     .hero-card {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 28px;
       padding: 18px;
       display: flex;
@@ -314,6 +384,8 @@
       max-width: 760px;
       width: 100%;
       position: relative;
+      border: 1px solid rgba(176, 150, 44, 0.12);
+      box-shadow: 0 14px 30px rgba(92, 77, 19, 0.06);
     }
 
     .hero-copy {
@@ -382,10 +454,10 @@
       max-width: 760px;
       margin: 18px auto 0;
       padding: 20px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(176, 150, 44, 0.12);
       border-radius: 22px;
-      background: linear-gradient(180deg, #fffdf2 0%, #f7f8e8 50%, #f1f6dc 100%);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+      background: linear-gradient(180deg, #fffdf2 0%, #f9f8eb 50%, #f2f6e0 100%);
+      box-shadow: 0 10px 24px rgba(92, 77, 19, 0.06);
       text-align: center;
       opacity: 0;
       transform: translateY(20px);
@@ -402,7 +474,7 @@
     .audio-card.audio-playing {
       border-color: rgba(245, 213, 71, 0.9);
       box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.08),
+        0 12px 30px rgba(92, 77, 19, 0.08),
         0 0 0 1px rgba(245, 213, 71, 0.45),
         0 0 28px rgba(245, 213, 71, 0.2);
     }
@@ -438,6 +510,7 @@
       margin: 0 0 14px;
       color: var(--muted);
       text-align: center;
+      max-width: none;
     }
 
     .audio-visualizer {
@@ -478,12 +551,12 @@
       margin: 0 auto;
       padding: 12px 14px;
       background: linear-gradient(180deg, #ffe66a 0%, var(--yellow) 100%);
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(176, 150, 44, 0.16);
       border-radius: 999px;
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.75),
-        0 2px 0 rgba(0, 0, 0, 0.08),
-        0 10px 18px rgba(0, 0, 0, 0.1);
+        0 2px 0 rgba(92, 77, 19, 0.08),
+        0 10px 18px rgba(92, 77, 19, 0.1);
       transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
       position: relative;
       z-index: 1;
@@ -493,8 +566,8 @@
       transform: translateY(-2px);
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        0 2px 0 rgba(0, 0, 0, 0.08),
-        0 14px 24px rgba(0, 0, 0, 0.14);
+        0 2px 0 rgba(92, 77, 19, 0.08),
+        0 14px 24px rgba(92, 77, 19, 0.14);
       background: linear-gradient(180deg, #fff07f 0%, #ffe15a 100%);
     }
 
@@ -510,51 +583,85 @@
       text-align: center;
     }
 
-    .ceo-video-wrap {
+    .video-shell {
       width: 100%;
       max-width: 760px;
       margin: 24px auto 0;
+      padding: 12px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 247, 237, 0.92));
+      border: 1px solid rgba(176, 150, 44, 0.14);
+      box-shadow: 0 14px 28px rgba(92, 77, 19, 0.07);
     }
 
-    .ceo-video-wrap iframe {
+    .video-label-row {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .video-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 247, 200, 0.94);
+      color: #6b5b00;
+      border: 1px solid rgba(212, 176, 0, 0.16);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      box-shadow: 0 6px 14px rgba(92, 77, 19, 0.06);
+    }
+
+    .video-frame {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fff 0%, #f9f9f2 100%);
+      border: 1px solid rgba(176, 150, 44, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      position: relative;
+    }
+
+    .video-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 44px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .video-frame iframe {
       width: 100%;
       aspect-ratio: 16 / 9;
       height: auto;
       border: 0;
       display: block;
-      border-radius: 12px;
-    }
-
-    .museum-video-wrap {
-      width: 100%;
-      max-width: 760px;
-      margin: 18px auto 0;
-    }
-
-    .museum-video-wrap iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      height: auto;
-      border: 0;
-      display: block;
-      border-radius: 12px;
+      border-radius: 18px;
     }
 
     .anniversary-interactive {
       position: relative;
       display: block;
       width: 100%;
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(176, 150, 44, 0.14);
       background: #fff;
       cursor: default;
       transition: transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: 0 10px 24px rgba(92, 77, 19, 0.07);
     }
 
     .anniversary-interactive:hover {
       transform: translateY(-3px);
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 16px 30px rgba(92, 77, 19, 0.11);
     }
 
     .anniversary-image-layer {
@@ -587,14 +694,6 @@
       pointer-events: none;
     }
 
-    .anniversary-instruction {
-      text-align: center;
-      font-weight: 700;
-      color: #7b6c00;
-      margin: 8px 0 14px;
-      line-height: 1.5;
-    }
-
     .anniversary-tip {
       display: inline-flex;
       align-items: center;
@@ -605,7 +704,7 @@
       background: rgba(255, 247, 200, 0.95);
       color: #6b5b00;
       font-weight: 800;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+      box-shadow: 0 8px 22px rgba(92, 77, 19, 0.09);
       border: 1px solid rgba(212, 176, 0, 0.18);
       opacity: 0;
       transform: translateY(10px) scale(0.96);
@@ -735,12 +834,8 @@
     }
 
     @keyframes balloonFloat {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-4px);
-      }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
     }
 
     .balloon-1  { top: 7.5%;  left: 10.2%; }
@@ -750,7 +845,6 @@
     .balloon-5  { top: 5.8%;  left: 54.2%; }
     .balloon-10 { top: 4.8%;  left: 65.2%; }
     .balloon-15 { top: 8.0%;  left: 76.0%; }
-
     .balloon-20 { top: 20.8%; left: 9.0%; }
     .balloon-25 { top: 17.2%; left: 20.8%; }
     .balloon-30 { top: 18.0%; left: 32.2%; }
@@ -760,7 +854,7 @@
     .balloon-50 { top: 18.6%; left: 77.0%; }
 
     .anniversary-summary {
-      margin-top: 20px;
+      margin-top: 22px;
     }
 
     .hero-links {
@@ -772,8 +866,8 @@
 
     .footer {
       text-align: center;
-      color: var(--muted);
-      padding: 0 18px 36px;
+      color: var(--muted-soft);
+      padding: 4px 18px 40px;
       font-size: 0.94rem;
     }
 
@@ -843,7 +937,7 @@
       position: relative;
       width: min(420px, 92vw);
       background: linear-gradient(180deg, #fffdf2 0%, #f7f8e8 50%, #f1f6dc 100%);
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(176, 150, 44, 0.14);
       border-radius: 24px;
       padding: 28px 24px 24px;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
@@ -862,7 +956,7 @@
       font-weight: 800;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.10);
+      box-shadow: 0 6px 14px rgba(92, 77, 19, 0.1);
     }
 
     .milestone-modal h3 {
@@ -878,6 +972,58 @@
       color: var(--muted);
       font-size: 1.04rem;
       line-height: 1.65;
+      max-width: none;
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 16px;
+      bottom: 18px;
+      z-index: 4600;
+      border: none;
+      border-radius: 999px;
+      min-width: 52px;
+      min-height: 52px;
+      padding: 0 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(180deg, #ffe66a 0%, var(--yellow) 100%);
+      color: #111;
+      font-weight: 800;
+      box-shadow:
+        0 8px 18px rgba(92, 77, 19, 0.14),
+        0 2px 0 rgba(92, 77, 19, 0.08);
+      border: 1px solid rgba(176, 150, 44, 0.18);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(14px) scale(0.94);
+      transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease, box-shadow 0.18s ease;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .back-to-top:hover {
+      box-shadow:
+        0 12px 24px rgba(92, 77, 19, 0.18),
+        0 2px 0 rgba(92, 77, 19, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .back-to-top .arrow {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .back-to-top .label {
+      font-size: 0.92rem;
+      line-height: 1;
     }
 
     @media (max-width: 900px) {
@@ -892,8 +1038,7 @@
       .hero-card,
       .hero-copy,
       .hero-image img,
-      .ceo-video-wrap,
-      .museum-video-wrap,
+      .video-shell,
       .audio-card {
         max-width: 100%;
       }
@@ -909,13 +1054,13 @@
       }
 
       .sections {
-        padding: 12px;
+        padding: 18px 14px 14px;
       }
 
       .section {
-        padding: 14px 12px;
-        border-radius: 22px;
-        margin-bottom: 22px;
+        padding: 18px 14px 20px;
+        border-radius: 24px;
+        margin-bottom: 24px;
       }
 
       .hero-card {
@@ -954,14 +1099,15 @@
       .section p,
       .anniversary-summary,
       .audio-card p {
-        line-height: 1.7;
-        margin: 16px auto 20px;
-        padding-inline: 10px;
+        line-height: 1.72;
+        margin: 18px auto 0;
+        max-width: var(--mobile-copy-width);
         text-align: center;
+        color: #4b4b4b;
       }
 
       .links {
-        margin-top: 16px;
+        margin-top: 18px;
       }
 
       .audio-player-wrap {
@@ -993,6 +1139,27 @@
         bottom: 14px;
         font-size: 0.92rem;
         padding: 9px 12px;
+      }
+
+      .video-shell {
+        padding: 10px;
+        border-radius: 20px;
+      }
+
+      .video-label {
+        font-size: 0.72rem;
+      }
+
+      .back-to-top {
+        right: 12px;
+        bottom: 14px;
+        min-width: 50px;
+        min-height: 50px;
+        padding: 0 14px;
+      }
+
+      .back-to-top .label {
+        display: none;
       }
     }
 
@@ -1071,16 +1238,25 @@
       </div>
     </section>
 
-    <section id="ceo-message" class="section reveal">
-      <h2>From the CEO: Thank You!</h2>
-      <div class="ceo-video-wrap">
-        <iframe
-          src="https://player.vimeo.com/video/1170667363?h=50e07f30cd"
-          title="Associate Appreciation Kits Info"
-          frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+    <section id="ceo-message" class="section reveal featured-section">
+      <div class="section-head">
+        <div class="section-kicker">Featured</div>
+        <h2>From the CEO: Thank You!</h2>
+      </div>
+
+      <div class="video-shell">
+        <div class="video-label-row">
+          <div class="video-label">Watch First</div>
+        </div>
+        <div class="video-frame">
+          <iframe
+            src="https://player.vimeo.com/video/1170667363?h=50e07f30cd"
+            title="Associate Appreciation Kits Info"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
       </div>
     </section>
 
@@ -1096,16 +1272,19 @@
           </div>
         </div>
 
-        <p>Dress up and show your Waffle House pride.</p>
+        <div class="section-copy">
+          <p>Dress up and show your Waffle House pride.</p>
 
-        <div class="links">
-          <a class="section-link" href="PDFs/Associate Appreciation Dress-Up Day Guidelines .pdf">View Guidelines</a>
+          <div class="links">
+            <a class="section-link" href="PDFs/Associate Appreciation Dress-Up Day Guidelines .pdf">View Guidelines</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="anniversaries" class="section reveal">
+    <section id="anniversaries" class="section reveal featured-section">
       <div class="section-head">
+        <div class="section-kicker">Interactive</div>
         <h2>Anniversaries</h2>
       </div>
 
@@ -1135,18 +1314,21 @@
           </div>
         </div>
 
-        <p class="anniversary-summary">
-          Celebrating over 16,000 Associates for their dedication and service! Click on the balloons to see how many are celebrating each milestone.
-        </p>
+        <div class="section-copy">
+          <p class="anniversary-summary">
+            Celebrating over 16,000 Associates for their dedication and service. Tap the balloons to see how many are celebrating each milestone.
+          </p>
 
-        <div class="links">
-          <a class="section-link" href="#">Recognition details</a>
+          <div class="links">
+            <a class="section-link" href="#">Recognition details</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="trivia" class="section reveal">
+    <section id="trivia" class="section reveal featured-section">
       <div class="section-head">
+        <div class="section-kicker">Featured</div>
         <h2>Museum Tour &amp; Trivia</h2>
       </div>
 
@@ -1157,26 +1339,33 @@
           </div>
         </div>
 
-        <div class="museum-video-wrap">
-          <iframe
-            src="https://player.vimeo.com/video/1170667363?h=50e07f30cd"
-            title="Museum Tour Video"
-            frameborder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowfullscreen>
-          </iframe>
+        <div class="video-shell" style="margin-top: 20px;">
+          <div class="video-label-row">
+            <div class="video-label">Watch Then Play</div>
+          </div>
+          <div class="video-frame">
+            <iframe
+              src="https://player.vimeo.com/video/1170667363?h=50e07f30cd"
+              title="Museum Tour Video"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
 
-        <p>Watch the museum tour video, then test your knowledge for a chance to win exclusive raffle prizes.</p>
+        <div class="section-copy">
+          <p>Watch the museum tour video, then test your knowledge for a chance to win exclusive raffle prizes.</p>
 
-        <div class="links">
-          <a
-            class="section-link"
-            href="https://www.surveymonkey.com/survey-closed/?sm=WRpY9sKAVbCOt7H_2BORYWi1mG0A13IZOgdEjfuVEg9sTvMJz6ZNt8Uk7mIiFJLmyv9nxqZPack_2B6G4x4Pi9_2BsZvemUitAedxeftnG73RhJcVqDhuLwOAhCb7wPj4KQcrOrY_2F57SsHyO6azNUydTn_2F0g_3D_3D"
-            rel="noopener noreferrer"
-          >
-            Ready for Trivia?
-          </a>
+          <div class="links">
+            <a
+              class="section-link"
+              href="https://www.surveymonkey.com/survey-closed/?sm=WRpY9sKAVbCOt7H_2BORYWi1mG0A13IZOgdEjfuVEg9sTvMJz6ZNt8Uk7mIiFJLmyv9nxqZPack_2B6G4x4Pi9_2BsZvemUitAedxeftnG73RhJcVqDhuLwOAhCb7wPj4KQcrOrY_2F57SsHyO6azNUydTn_2F0g_3D_3D"
+              rel="noopener noreferrer"
+            >
+              Ready for Trivia?
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1193,16 +1382,18 @@
           </div>
         </div>
 
-        <p>Upload your best photos to enter.</p>
+        <div class="section-copy">
+          <p>Upload your best photos to enter.</p>
 
-        <div class="links">
-          <a
-            class="section-link"
-            href="https://form.jotform.com/260616390409053"
-            rel="noopener noreferrer"
-          >
-            Submission &amp; Contest Rules
-          </a>
+          <div class="links">
+            <a
+              class="section-link"
+              href="https://form.jotform.com/260616390409053"
+              rel="noopener noreferrer"
+            >
+              Submission &amp; Contest Rules
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1219,17 +1410,19 @@
           </div>
         </div>
 
-        <p>Don’t need a new pair? Pay it forward! Use your credit to grab shoes for a coworker (see FAQs for steps).</p>
+        <div class="section-copy">
+          <p>Don’t need a new pair? Pay it forward. Use your credit to grab shoes for a coworker.</p>
 
-        <div class="links">
-          <a
-            class="section-link"
-            href="https://www.shoesforcrews.com/wafflehouse"
-            rel="noopener noreferrer"
-          >
-            Shop Now!
-          </a>
-          <a class="section-link secondary" href="PDFs/Shoes for Crews FAQs.pdf">View FAQs</a>
+          <div class="links">
+            <a
+              class="section-link"
+              href="https://www.shoesforcrews.com/wafflehouse"
+              rel="noopener noreferrer"
+            >
+              Shop Now!
+            </a>
+            <a class="section-link secondary" href="PDFs/Shoes for Crews FAQs.pdf">View FAQs</a>
+          </div>
         </div>
       </div>
     </section>
@@ -1246,23 +1439,25 @@
           </div>
         </div>
 
-        <p>Enjoy 5 free jukebox credits a week on the House.</p>
+        <div class="section-copy">
+          <p>Enjoy 5 free jukebox credits a week on the House.</p>
 
-        <div class="links">
-          <a
-            class="section-link"
-            href="https://www.touchtunes.com/play/app"
-            rel="noopener noreferrer"
-          >
-            Download the App
-          </a>
-          <a
-            class="section-link secondary"
-            href="https://touchtunes.helpshift.com/hc/en/8-touchtunes/?p=all"
-            rel="noopener noreferrer"
-          >
-            App Help
-          </a>
+          <div class="links">
+            <a
+              class="section-link"
+              href="https://www.touchtunes.com/play/app"
+              rel="noopener noreferrer"
+            >
+              Download the App
+            </a>
+            <a
+              class="section-link secondary"
+              href="https://touchtunes.helpshift.com/hc/en/8-touchtunes/?p=all"
+              rel="noopener noreferrer"
+            >
+              App Help
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1272,6 +1467,11 @@
   <div class="footer">
     &copy; 2026 Waffle House Inc. Intellectual Property. All rights reserved.
   </div>
+
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+    <span class="arrow">↑</span>
+    <span class="label">Top</span>
+  </button>
 
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox-inner">
@@ -1314,6 +1514,7 @@
       const anniversaryTip = document.getElementById("anniversary-tip");
       const triggers = document.querySelectorAll(".lightbox-trigger");
       const revealItems = document.querySelectorAll(".reveal");
+      const backToTop = document.getElementById("back-to-top");
 
       let sectionFocusTimer;
       let confettiFired = false;
@@ -1337,10 +1538,18 @@
 
         const warmth = Math.min(1, Math.max(0, progress / 100));
         document.documentElement.style.setProperty("--page-warmth", warmth.toFixed(3));
+
+        if (backToTop) {
+          backToTop.classList.toggle("show", scrollTop > 420);
+        }
       };
 
       updateProgressBar();
       window.addEventListener("scroll", updateProgressBar, { passive: true });
+
+      backToTop?.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+      });
 
       if (!prefersReducedMotion && "IntersectionObserver" in window) {
         const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -1373,26 +1582,25 @@
         audioCard?.classList.add("animate");
       }
 
-    const fireConfetti = () => {
-  if (confettiFired || prefersReducedMotion || typeof confetti !== "function") return;
+      const fireConfetti = () => {
+        if (confettiFired || prefersReducedMotion || typeof confetti !== "function") return;
 
-  confetti({
-    particleCount: 110,
-    spread: 78,
-    startVelocity: 34,
-    origin: { y: 0.28 }
-  });
+        confetti({
+          particleCount: 110,
+          spread: 78,
+          startVelocity: 34,
+          origin: { y: 0.28 }
+        });
 
-  confettiFired = true;
-};
+        confettiFired = true;
+      };
 
-window.addEventListener("load", () => {
-  setTimeout(fireConfetti, 900);
-});
+      window.addEventListener("load", () => {
+        setTimeout(fireConfetti, isMobile ? 900 : 650);
+      });
 
-window.addEventListener("touchstart", fireConfetti, { once: true, passive: true });
-window.addEventListener("click", fireConfetti, { once: true, passive: true });
-
+      window.addEventListener("touchstart", fireConfetti, { once: true, passive: true });
+      window.addEventListener("click", fireConfetti, { once: true, passive: true });
 
       const openLightbox = (img) => {
         lightboxImage.src = img.src;
@@ -1673,5 +1881,3 @@ window.addEventListener("click", fireConfetti, { once: true, passive: true });
   </script>
 </body>
 </html>
-
-
