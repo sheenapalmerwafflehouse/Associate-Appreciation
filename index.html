@@ -9,17 +9,16 @@
     :root {
       --bg: #f6f1df;
       --bg-warm: #fff6cf;
-      --card: rgba(255, 255, 255, 0.88);
+      --card: rgba(255, 255, 255, 0.9);
       --card-strong: #ffffff;
       --text: #111111;
       --muted: #4f4f4f;
-      --muted-soft: #676767;
+      --muted-soft: #6b6b6b;
       --yellow: #f5d547;
       --yellow-dark: #d4b000;
       --yellow-soft: #fff7c8;
       --green-tint: #f0f6df;
       --border: rgba(176, 150, 44, 0.18);
-      --border-strong: rgba(212, 176, 0, 0.36);
       --shadow: 0 10px 24px rgba(92, 77, 19, 0.08);
       --shadow-hover: 0 18px 38px rgba(92, 77, 19, 0.12);
       --radius: 24px;
@@ -36,7 +35,7 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 96px;
+      scroll-padding-top: 132px;
       scroll-snap-type: y proximity;
     }
 
@@ -108,10 +107,12 @@
     .topbar-inner {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 10px 16px;
+      padding: 10px 16px 8px;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .logo-link {
@@ -131,10 +132,93 @@
       transform: scale(1.05);
     }
 
+    .mini-nav-wrap {
+      width: 100%;
+      max-width: 780px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .mini-nav-wrap::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mini-nav {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      min-width: max-content;
+      padding: 2px 2px 8px;
+    }
+
+    .mini-nav a {
+      text-decoration: none;
+      color: #343434;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(176, 150, 44, 0.12);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(92, 77, 19, 0.05);
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .mini-nav a:hover,
+    .mini-nav a.active {
+      background: rgba(255, 247, 200, 0.96);
+      border-color: rgba(212, 176, 0, 0.28);
+      transform: translateY(-1px);
+    }
+
     .sections {
       max-width: var(--max);
       margin: 0 auto;
       padding: 24px 24px 18px;
+    }
+
+    .divider-sparkle {
+      width: min(240px, 65vw);
+      height: 16px;
+      margin: 0 auto 22px;
+      position: relative;
+      opacity: 0.92;
+    }
+
+    .divider-sparkle::before {
+      content: "";
+      position: absolute;
+      inset: 7px 0 auto 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(
+        90deg,
+        rgba(245, 213, 71, 0),
+        rgba(245, 213, 71, 0.28),
+        rgba(255, 236, 145, 0.9),
+        rgba(245, 213, 71, 0.28),
+        rgba(245, 213, 71, 0)
+      );
+      overflow: hidden;
+    }
+
+    .divider-sparkle::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: -18%;
+      width: 28%;
+      height: 10px;
+      background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,244,182,0.75) 35%, rgba(255,244,182,0) 72%);
+      filter: blur(1px);
+      animation: dividerShimmer 4.8s linear infinite;
+    }
+
+    @keyframes dividerShimmer {
+      0% { left: -20%; }
+      100% { left: 92%; }
     }
 
     .section {
@@ -142,7 +226,7 @@
       max-width: 900px;
       margin: 0 auto 30px;
       padding: 22px 20px 24px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(247, 249, 235, 0.72));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 249, 235, 0.74));
       border: 1px solid var(--border);
       border-radius: 28px;
       box-shadow: var(--shadow);
@@ -156,7 +240,6 @@
       position: relative;
       overflow: hidden;
       scroll-snap-align: start;
-      scroll-snap-stop: normal;
       transform-origin: center center;
     }
 
@@ -191,7 +274,7 @@
 
     .section.featured-section {
       border-color: rgba(245, 213, 71, 0.42);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(252, 248, 221, 0.82));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(252, 248, 221, 0.84));
     }
 
     .reveal {
@@ -337,29 +420,38 @@
     }
 
     .pill,
-    .section-link {
+    .section-link,
+    .mobile-audio-btn,
+    .video-poster-play {
       text-decoration: none;
       color: #111;
       background: var(--yellow);
+      border: 1px solid rgba(176, 150, 44, 0.18);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .pill,
+    .section-link {
       padding: 12px 18px;
       min-height: 46px;
       border-radius: 999px;
       font-weight: 800;
-      border: 1px solid rgba(176, 150, 44, 0.18);
       box-shadow:
         0 2px 0 rgba(92, 77, 19, 0.1),
         0 8px 18px rgba(92, 77, 19, 0.08);
-      transition: all 0.18s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      position: relative;
-      overflow: hidden;
     }
 
     .pill:hover,
-    .section-link:hover {
+    .section-link:hover,
+    .mobile-audio-btn:hover,
+    .video-poster-play:hover {
       transform: translateY(-2px);
       box-shadow:
         0 2px 0 rgba(92, 77, 19, 0.1),
@@ -368,9 +460,46 @@
     }
 
     .section-link.secondary {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       color: #2b2b2b;
       border-color: rgba(212, 176, 0, 0.28);
+    }
+
+    .pressable {
+      will-change: transform;
+    }
+
+    .pressable.is-pressing {
+      transform: scale(0.965);
+      box-shadow:
+        0 1px 0 rgba(92, 77, 19, 0.08),
+        0 4px 10px rgba(92, 77, 19, 0.1);
+    }
+
+    .pressable.rebound {
+      animation: pressRebound 220ms ease-out;
+    }
+
+    @keyframes pressRebound {
+      0% { transform: scale(0.97); }
+      55% { transform: scale(1.025); }
+      100% { transform: scale(1); }
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.55);
+      animation: rippleAnim 520ms ease-out forwards;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+      }
     }
 
     .hero-card {
@@ -433,6 +562,7 @@
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.8s ease, transform 0.8s ease;
+      position: relative;
     }
 
     .hero-image.animate {
@@ -447,6 +577,7 @@
       height: auto;
       margin: 0 auto;
       border-radius: 24px;
+      will-change: transform;
     }
 
     .audio-card {
@@ -489,14 +620,8 @@
     }
 
     @keyframes audioPulseGlow {
-      0%, 100% {
-        transform: scale(0.92);
-        opacity: 0.4;
-      }
-      50% {
-        transform: scale(1.02);
-        opacity: 0.85;
-      }
+      0%, 100% { transform: scale(0.92); opacity: 0.4; }
+      50% { transform: scale(1.02); opacity: 0.85; }
     }
 
     .audio-card h3 {
@@ -513,37 +638,130 @@
       max-width: none;
     }
 
+    .audio-prompt {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255, 247, 200, 0.95);
+      color: #6b5b00;
+      border: 1px solid rgba(212, 176, 0, 0.18);
+      font-weight: 800;
+      font-size: 0.86rem;
+      margin: 0 auto 12px;
+      box-shadow: 0 6px 14px rgba(92, 77, 19, 0.06);
+    }
+
+    .audio-player-shell {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .audio-player-shell.mobile-compact {
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(176, 150, 44, 0.12);
+      border-radius: 20px;
+      padding: 12px;
+    }
+
+    .mobile-audio-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 2px 0 rgba(92, 77, 19, 0.1),
+        0 8px 18px rgba(92, 77, 19, 0.08);
+      cursor: pointer;
+      font-size: 1.6rem;
+      font-weight: 900;
+      line-height: 1;
+      border: none;
+    }
+
+    .mobile-audio-meta {
+      min-width: 0;
+    }
+
+    .mobile-audio-label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7b6c00;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .mobile-audio-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #1f1f1f;
+    }
+
+    .mobile-audio-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 247, 200, 0.95);
+      border: 1px solid rgba(212, 176, 0, 0.18);
+      color: #7b6c00;
+      font-size: 1rem;
+      flex: 0 0 auto;
+    }
+
     .audio-visualizer {
       width: 100%;
-      max-width: 180px;
+      max-width: 210px;
       margin: 0 auto 12px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      gap: 5px;
-      height: 26px;
+      gap: 4px;
+      height: 30px;
       position: relative;
       z-index: 1;
     }
 
-    .audio-visualizer span {
-      width: 6px;
+    .audio-wave-line {
+      width: 9px;
       height: 8px;
       border-radius: 999px;
       background: linear-gradient(180deg, #ffe66a 0%, #d4b000 100%);
       transform-origin: bottom center;
-      opacity: 0.8;
+      opacity: 0.86;
+      transition: transform 0.2s ease;
     }
 
-    .audio-card.audio-playing .audio-visualizer span:nth-child(1) { animation: equalizerBounce 0.9s ease-in-out infinite; }
-    .audio-card.audio-playing .audio-visualizer span:nth-child(2) { animation: equalizerBounce 0.7s ease-in-out infinite 0.08s; }
-    .audio-card.audio-playing .audio-visualizer span:nth-child(3) { animation: equalizerBounce 1s ease-in-out infinite 0.16s; }
-    .audio-card.audio-playing .audio-visualizer span:nth-child(4) { animation: equalizerBounce 0.65s ease-in-out infinite 0.1s; }
-    .audio-card.audio-playing .audio-visualizer span:nth-child(5) { animation: equalizerBounce 0.82s ease-in-out infinite 0.04s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(1) { animation: waveDance 0.82s ease-in-out infinite; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(2) { animation: waveDance 1.05s ease-in-out infinite 0.05s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(3) { animation: waveDance 0.68s ease-in-out infinite 0.1s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(4) { animation: waveDance 1.12s ease-in-out infinite 0.02s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(5) { animation: waveDance 0.78s ease-in-out infinite 0.12s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(6) { animation: waveDance 0.96s ease-in-out infinite 0.04s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(7) { animation: waveDance 0.72s ease-in-out infinite 0.08s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(8) { animation: waveDance 1.08s ease-in-out infinite 0.15s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(9) { animation: waveDance 0.84s ease-in-out infinite 0.03s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(10) { animation: waveDance 1.0s ease-in-out infinite 0.11s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(11) { animation: waveDance 0.74s ease-in-out infinite 0.06s; }
+    .audio-card.audio-playing .audio-wave-line:nth-child(12) { animation: waveDance 0.92s ease-in-out infinite 0.14s; }
 
-    @keyframes equalizerBounce {
-      0%, 100% { transform: scaleY(0.55); opacity: 0.6; }
-      50% { transform: scaleY(2.6); opacity: 1; }
+    @keyframes waveDance {
+      0%, 100% { transform: scaleY(0.45); opacity: 0.56; }
+      25% { transform: scaleY(1.7); opacity: 0.95; }
+      50% { transform: scaleY(2.5); opacity: 1; }
+      75% { transform: scaleY(1.15); opacity: 0.85; }
     }
 
     .audio-player-wrap {
@@ -627,16 +845,6 @@
       position: relative;
     }
 
-    .video-frame::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 44px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
-      pointer-events: none;
-      z-index: 1;
-    }
-
     .video-frame iframe {
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -644,6 +852,69 @@
       border: 0;
       display: block;
       border-radius: 18px;
+    }
+
+    .video-poster {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      border-radius: 18px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.18)),
+        center / cover no-repeat;
+      display: none;
+    }
+
+    .video-poster::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17, 17, 17, 0.06), rgba(17, 17, 17, 0.36));
+    }
+
+    .video-poster-content {
+      position: absolute;
+      inset: auto 14px 14px 14px;
+      z-index: 2;
+      color: #fff;
+      text-align: center;
+    }
+
+    .video-poster-title {
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.2;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .video-poster-subtitle {
+      font-size: 0.84rem;
+      margin-top: 6px;
+      opacity: 0.95;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .video-poster-play {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      z-index: 2;
+      cursor: pointer;
+      box-shadow:
+        0 2px 0 rgba(92, 77, 19, 0.1),
+        0 12px 22px rgba(92, 77, 19, 0.18);
+    }
+
+    .video-poster-play span {
+      margin-left: 4px;
     }
 
     .anniversary-interactive {
@@ -857,17 +1128,62 @@
       margin-top: 22px;
     }
 
-    .hero-links {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
+    .footer-decor {
+      margin-top: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,245,200,0.24) 18%, rgba(248,239,201,0.62) 100%);
+      border-top: 1px solid rgba(212, 176, 0, 0.14);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-decor::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 35%, rgba(245, 213, 71, 0.13) 0%, rgba(245, 213, 71, 0) 20%),
+        radial-gradient(circle at 85% 26%, rgba(245, 213, 71, 0.09) 0%, rgba(245, 213, 71, 0) 18%);
+      pointer-events: none;
+    }
+
+    .footer-decor-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 34px 20px 42px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-watermark {
+      width: 88px;
+      height: 88px;
+      object-fit: contain;
+      opacity: 0.14;
+      margin: 0 auto 14px;
+      filter: saturate(0.8);
+    }
+
+    .footer-thanks {
+      font-size: clamp(1rem, 2.4vw, 1.2rem);
+      font-weight: 800;
+      color: #534400;
+      letter-spacing: 0.02em;
+      margin: 0 0 8px;
+    }
+
+    .footer-note {
+      color: var(--muted-soft);
+      max-width: 44ch;
+      margin: 0 auto;
+      line-height: 1.7;
     }
 
     .footer {
       text-align: center;
       color: var(--muted-soft);
-      padding: 4px 18px 40px;
+      padding: 6px 18px 40px;
       font-size: 0.94rem;
     }
 
@@ -896,10 +1212,14 @@
 
     .lightbox-inner {
       position: relative;
-      max-width: min(1100px, 96vw);
+      width: min(1100px, 96vw);
       max-height: 92vh;
       transform: scale(0.96);
       transition: transform 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     .lightbox.open .lightbox-inner,
@@ -910,10 +1230,22 @@
     .lightbox img {
       display: block;
       max-width: 100%;
-      max-height: 92vh;
+      max-height: calc(92vh - 74px);
       border-radius: 18px;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
       background: #fff;
+    }
+
+    .lightbox-caption {
+      max-width: min(900px, 88vw);
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.94);
+      color: #222;
+      text-align: center;
+      font-weight: 700;
+      line-height: 1.45;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.16);
     }
 
     .lightbox-close,
@@ -1051,10 +1383,26 @@
 
       html {
         scroll-snap-type: y proximity;
+        scroll-padding-top: 126px;
+      }
+
+      .topbar-inner {
+        padding-top: 8px;
+        gap: 6px;
+      }
+
+      .mini-nav {
+        justify-content: flex-start;
+        padding-bottom: 6px;
       }
 
       .sections {
         padding: 18px 14px 14px;
+      }
+
+      .divider-sparkle {
+        width: min(180px, 54vw);
+        margin-bottom: 18px;
       }
 
       .section {
@@ -1075,8 +1423,7 @@
         max-width: 100%;
       }
 
-      .links,
-      .hero-links {
+      .links {
         justify-content: center;
       }
 
@@ -1111,8 +1458,16 @@
       }
 
       .audio-player-wrap {
-        border-radius: 20px;
-        padding: 10px 12px;
+        display: none;
+      }
+
+      .audio-player-shell.mobile-compact {
+        display: grid;
+      }
+
+      .audio-visualizer {
+        max-width: 100%;
+        margin-bottom: 0;
       }
 
       .balloon-hotspot {
@@ -1150,6 +1505,14 @@
         font-size: 0.72rem;
       }
 
+      .video-frame iframe {
+        display: none;
+      }
+
+      .video-poster {
+        display: block;
+      }
+
       .back-to-top {
         right: 12px;
         bottom: 14px;
@@ -1159,6 +1522,17 @@
       }
 
       .back-to-top .label {
+        display: none;
+      }
+
+      .footer-watermark {
+        width: 72px;
+        height: 72px;
+      }
+    }
+
+    @media (min-width: 641px) {
+      .audio-player-shell.mobile-compact {
         display: none;
       }
     }
@@ -1194,6 +1568,18 @@
       <div class="logo-link">
         <img src="Images/Mission Module Pics (17).png" alt="Waffle House Logo" class="nav-logo" />
       </div>
+
+      <div class="mini-nav-wrap" aria-label="Section Navigation">
+        <nav class="mini-nav" id="mini-nav">
+          <a href="#hero">Hero</a>
+          <a href="#dressup">Dress-Up</a>
+          <a href="#anniversaries">Anniversaries</a>
+          <a href="#trivia">Trivia</a>
+          <a href="#photo">Photos</a>
+          <a href="#shoes-for-crews">Shoes</a>
+          <a href="#touchtunes">TouchTunes</a>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -1207,19 +1593,41 @@
         </div>
 
         <div class="section-image-link hero-image lightbox-trigger">
-          <img src="Images/Intro graphic (1).png" alt="Associate Appreciation" />
+          <img src="Images/Intro graphic (1).png" alt="Associate Appreciation" data-caption="Associate Appreciation Celebration Graphic" />
         </div>
 
         <div class="audio-card" id="audio-card">
           <h3>Appreciation Song</h3>
-          <p>Click to listen.</p>
+          <p>Celebrate with the Waffle House appreciation track.</p>
+
+          <div class="audio-prompt" id="audio-prompt">
+            🎵 Tap to play the celebration song
+          </div>
+
+          <div class="audio-player-shell mobile-compact">
+            <button class="mobile-audio-btn pressable" id="mobile-audio-btn" type="button" aria-label="Play appreciation song">🧇</button>
+
+            <div class="mobile-audio-meta">
+              <div class="mobile-audio-label">Now Ready</div>
+              <div class="mobile-audio-title">Associate Appreciation Song</div>
+            </div>
+
+            <div class="mobile-audio-icon" aria-hidden="true">🔊</div>
+          </div>
 
           <div class="audio-visualizer" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
+            <span class="audio-wave-line"></span>
           </div>
 
           <div class="audio-player-wrap">
@@ -1238,6 +1646,8 @@
       </div>
     </section>
 
+    <div class="divider-sparkle" aria-hidden="true"></div>
+
     <section id="ceo-message" class="section reveal featured-section">
       <div class="section-head">
         <div class="section-kicker">Featured</div>
@@ -1248,8 +1658,22 @@
         <div class="video-label-row">
           <div class="video-label">Watch First</div>
         </div>
+
         <div class="video-frame">
+          <div
+            class="video-poster"
+            data-video-container
+            style="background-image: url('Images/Intro graphic (1).png');"
+          >
+            <button class="video-poster-play pressable" type="button" data-video-play aria-label="Play CEO video"><span>▶</span></button>
+            <div class="video-poster-content">
+              <div class="video-poster-title">CEO Thank You Message</div>
+              <div class="video-poster-subtitle">Tap to play</div>
+            </div>
+          </div>
+
           <iframe
+            data-video-iframe
             src="https://player.vimeo.com/video/1170667363?h=50e07f30cd"
             title="Associate Appreciation Kits Info"
             frameborder="0"
@@ -1260,6 +1684,8 @@
       </div>
     </section>
 
+    <div class="divider-sparkle" aria-hidden="true"></div>
+
     <section id="dressup" class="section reveal">
       <div class="section-head">
         <h2>Dress-Up Days</h2>
@@ -1268,7 +1694,7 @@
       <div class="section-image-wrap">
         <div class="section-image-link lightbox-trigger">
           <div class="media-frame">
-            <img src="Images/2026 Associate Appreciation Dress-Up Days (2).png" alt="Dress-up Schedule" />
+            <img src="Images/2026 Associate Appreciation Dress-Up Days (2).png" alt="Dress-up Schedule" data-caption="2026 Associate Appreciation Dress-Up Days" />
           </div>
         </div>
 
@@ -1276,11 +1702,13 @@
           <p>Dress up and show your Waffle House pride.</p>
 
           <div class="links">
-            <a class="section-link" href="PDFs/Associate Appreciation Dress-Up Day Guidelines .pdf">View Guidelines</a>
+            <a class="section-link pressable" href="PDFs/Associate Appreciation Dress-Up Day Guidelines .pdf">View Guidelines</a>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="divider-sparkle" aria-hidden="true"></div>
 
     <section id="anniversaries" class="section reveal featured-section">
       <div class="section-head">
@@ -1292,7 +1720,7 @@
         <div class="anniversary-interactive">
           <div class="anniversary-image-layer lightbox-trigger">
             <div class="media-frame">
-              <img src="Images/Anniversary Landing Page Graphic (8).png" alt="Anniversaries" />
+              <img src="Images/Anniversary Landing Page Graphic (8).png" alt="Anniversaries" data-caption="Anniversary Milestone Celebration Graphic" />
             </div>
           </div>
 
@@ -1320,11 +1748,13 @@
           </p>
 
           <div class="links">
-            <a class="section-link" href="#">Recognition details</a>
+            <a class="section-link pressable" href="#">Recognition details</a>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="divider-sparkle" aria-hidden="true"></div>
 
     <section id="trivia" class="section reveal featured-section">
       <div class="section-head">
@@ -1335,7 +1765,7 @@
       <div class="section-image-wrap">
         <div class="section-image-link lightbox-trigger">
           <div class="media-frame">
-            <img src="Images/Museum Tour.png" alt="Museum Tour and Trivia" />
+            <img src="Images/Museum Tour.png" alt="Museum Tour and Trivia" data-caption="Museum Tour and Trivia Graphic" />
           </div>
         </div>
 
@@ -1343,8 +1773,22 @@
           <div class="video-label-row">
             <div class="video-label">Watch Then Play</div>
           </div>
+
           <div class="video-frame">
+            <div
+              class="video-poster"
+              data-video-container
+              style="background-image: url('Images/Museum Tour.png');"
+            >
+              <button class="video-poster-play pressable" type="button" data-video-play aria-label="Play museum tour video"><span>▶</span></button>
+              <div class="video-poster-content">
+                <div class="video-poster-title">Museum Tour Video</div>
+                <div class="video-poster-subtitle">Tap to play</div>
+              </div>
+            </div>
+
             <iframe
+              data-video-iframe
               src="https://player.vimeo.com/video/1170667363?h=50e07f30cd"
               title="Museum Tour Video"
               frameborder="0"
@@ -1359,16 +1803,18 @@
 
           <div class="links">
             <a
-              class="section-link"
+              class="section-link pressable"
               href="https://www.surveymonkey.com/survey-closed/?sm=WRpY9sKAVbCOt7H_2BORYWi1mG0A13IZOgdEjfuVEg9sTvMJz6ZNt8Uk7mIiFJLmyv9nxqZPack_2B6G4x4Pi9_2BsZvemUitAedxeftnG73RhJcVqDhuLwOAhCb7wPj4KQcrOrY_2F57SsHyO6azNUydTn_2F0g_3D_3D"
               rel="noopener noreferrer"
             >
-              Play Trivia?
+              Ready for Trivia?
             </a>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="divider-sparkle" aria-hidden="true"></div>
 
     <section id="photo" class="section reveal">
       <div class="section-head">
@@ -1378,7 +1824,7 @@
       <div class="section-image-wrap">
         <div class="section-image-link lightbox-trigger">
           <div class="media-frame">
-            <img src="Images/2026 ASSOCIATE APPRECIATION PHOTO CONTEST.jpg" alt="Photo Contest" />
+            <img src="Images/2026 ASSOCIATE APPRECIATION PHOTO CONTEST.jpg" alt="Photo Contest" data-caption="2026 Associate Appreciation Photo Contest" />
           </div>
         </div>
 
@@ -1387,7 +1833,7 @@
 
           <div class="links">
             <a
-              class="section-link"
+              class="section-link pressable"
               href="https://form.jotform.com/260616390409053"
               rel="noopener noreferrer"
             >
@@ -1398,6 +1844,8 @@
       </div>
     </section>
 
+    <div class="divider-sparkle" aria-hidden="true"></div>
+
     <section id="shoes-for-crews" class="section reveal">
       <div class="section-head">
         <h2>Shoes For Crews</h2>
@@ -1406,7 +1854,7 @@
       <div class="section-image-wrap">
         <div class="section-image-link lightbox-trigger">
           <div class="media-frame">
-            <img src="Images/Shoes for Crews.png" alt="Shoes For Crews Collection" />
+            <img src="Images/Shoes for Crews.png" alt="Shoes For Crews Collection" data-caption="Shoes For Crews Collection" />
           </div>
         </div>
 
@@ -1415,17 +1863,19 @@
 
           <div class="links">
             <a
-              class="section-link"
+              class="section-link pressable"
               href="https://www.shoesforcrews.com/wafflehouse"
               rel="noopener noreferrer"
             >
               Shop Now!
             </a>
-            <a class="section-link secondary" href="PDFs/Shoes for Crews FAQs.pdf">View FAQs</a>
+            <a class="section-link secondary pressable" href="PDFs/Shoes for Crews FAQs.pdf">View FAQs</a>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="divider-sparkle" aria-hidden="true"></div>
 
     <section id="touchtunes" class="section reveal">
       <div class="section-head">
@@ -1435,7 +1885,7 @@
       <div class="section-image-wrap">
         <div class="section-image-link lightbox-trigger">
           <div class="media-frame">
-            <img src="Images/touchtunes.png" alt="TouchTunes" />
+            <img src="Images/touchtunes.png" alt="TouchTunes" data-caption="TouchTunes Weekly Credits Graphic" />
           </div>
         </div>
 
@@ -1444,14 +1894,14 @@
 
           <div class="links">
             <a
-              class="section-link"
+              class="section-link pressable"
               href="https://www.touchtunes.com/play/app"
               rel="noopener noreferrer"
             >
               Download the App
             </a>
             <a
-              class="section-link secondary"
+              class="section-link secondary pressable"
               href="https://touchtunes.helpshift.com/hc/en/8-touchtunes/?p=all"
               rel="noopener noreferrer"
             >
@@ -1464,11 +1914,21 @@
 
   </main>
 
+  <section class="footer-decor" aria-label="Closing Note">
+    <div class="footer-decor-inner">
+      <img src="Images/Mission Module Pics (17).png" alt="" class="footer-watermark" />
+      <p class="footer-thanks">Thank you for everything you do.</p>
+      <p class="footer-note">
+        Your dedication, teamwork, and heart are what make the celebration meaningful. We’re proud to celebrate every Associate across the Waffle House family.
+      </p>
+    </div>
+  </section>
+
   <div class="footer">
     &copy; 2026 Waffle House Inc. Intellectual Property. All rights reserved.
   </div>
 
-  <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+  <button class="back-to-top pressable" id="back-to-top" type="button" aria-label="Back to top">
     <span class="arrow">↑</span>
     <span class="label">Top</span>
   </button>
@@ -1477,6 +1937,7 @@
     <div class="lightbox-inner">
       <button class="lightbox-close" type="button" aria-label="Close image">&times;</button>
       <img id="lightbox-image" src="" alt="" />
+      <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
   </div>
 
@@ -1503,6 +1964,7 @@
       const sections = Array.from(document.querySelectorAll(".section"));
       const lightbox = document.getElementById("lightbox");
       const lightboxImage = document.getElementById("lightbox-image");
+      const lightboxCaption = document.getElementById("lightbox-caption");
       const lightboxClose = document.querySelector(".lightbox-close");
       const milestoneModal = document.getElementById("milestone-modal");
       const milestoneTitle = document.getElementById("milestone-title");
@@ -1511,10 +1973,20 @@
       const balloonHotspots = document.querySelectorAll(".balloon-hotspot");
       const audioPlayer = document.querySelector(".audio-player");
       const audioCard = document.getElementById("audio-card");
+      const audioPrompt = document.getElementById("audio-prompt");
+      const mobileAudioBtn = document.getElementById("mobile-audio-btn");
       const anniversaryTip = document.getElementById("anniversary-tip");
       const triggers = document.querySelectorAll(".lightbox-trigger");
       const revealItems = document.querySelectorAll(".reveal");
       const backToTop = document.getElementById("back-to-top");
+      const heroImage = document.querySelector(".hero-image img");
+      const miniNavLinks = Array.from(document.querySelectorAll(".mini-nav a"));
+      const shineTargets = [
+        ...document.querySelectorAll(".section-image-link"),
+        ...document.querySelectorAll(".anniversary-image-layer")
+      ];
+      const videoPlayButtons = document.querySelectorAll("[data-video-play]");
+      const pressables = document.querySelectorAll(".pressable");
 
       let sectionFocusTimer;
       let confettiFired = false;
@@ -1542,10 +2014,34 @@
         if (backToTop) {
           backToTop.classList.toggle("show", scrollTop > 420);
         }
+
+        if (heroImage && !prefersReducedMotion) {
+          const amount = Math.min(16, scrollTop * 0.06);
+          heroImage.style.transform = `translateY(${amount}px)`;
+        }
       };
 
       updateProgressBar();
       window.addEventListener("scroll", updateProgressBar, { passive: true });
+
+      const setActiveMiniNav = () => {
+        let activeId = "";
+        const offset = 180;
+
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= offset && rect.bottom > offset) {
+            activeId = section.id;
+          }
+        });
+
+        miniNavLinks.forEach((link) => {
+          link.classList.toggle("active", link.getAttribute("href") === `#${activeId}`);
+        });
+      };
+
+      setActiveMiniNav();
+      window.addEventListener("scroll", setActiveMiniNav, { passive: true });
 
       backToTop?.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
@@ -1570,15 +2066,15 @@
       }
 
       const heroCopy = document.querySelector(".hero-copy");
-      const heroImage = document.querySelector(".hero-image");
+      const heroWrap = document.querySelector(".hero-image");
 
       if (!prefersReducedMotion) {
         setTimeout(() => heroCopy?.classList.add("animate"), 100);
-        setTimeout(() => heroImage?.classList.add("animate"), 350);
+        setTimeout(() => heroWrap?.classList.add("animate"), 350);
         setTimeout(() => audioCard?.classList.add("animate"), 600);
       } else {
         heroCopy?.classList.add("animate");
-        heroImage?.classList.add("animate");
+        heroWrap?.classList.add("animate");
         audioCard?.classList.add("animate");
       }
 
@@ -1605,6 +2101,7 @@
       const openLightbox = (img) => {
         lightboxImage.src = img.src;
         lightboxImage.alt = img.alt || "";
+        lightboxCaption.textContent = img.dataset.caption || img.alt || "";
         lightbox.classList.add("open");
         lightbox.setAttribute("aria-hidden", "false");
         document.body.classList.add("lightbox-open");
@@ -1617,6 +2114,7 @@
         setTimeout(() => {
           lightboxImage.src = "";
           lightboxImage.alt = "";
+          lightboxCaption.textContent = "";
         }, 180);
       };
 
@@ -1740,18 +2238,50 @@
 
       audioPlayer?.addEventListener("contextmenu", (e) => e.preventDefault());
 
+      const updateMobileAudioButton = () => {
+        if (!mobileAudioBtn) return;
+        mobileAudioBtn.textContent = audioPlayer && !audioPlayer.paused && !audioPlayer.ended ? "❚❚" : "🧇";
+        mobileAudioBtn.setAttribute(
+          "aria-label",
+          audioPlayer && !audioPlayer.paused && !audioPlayer.ended ? "Pause appreciation song" : "Play appreciation song"
+        );
+      };
+
       const syncAudioState = () => {
         if (!audioPlayer || !audioCard) return;
         if (!audioPlayer.paused && !audioPlayer.ended) {
           audioCard.classList.add("audio-playing");
+          audioPrompt?.style.setProperty("display", "none");
         } else {
           audioCard.classList.remove("audio-playing");
+          audioPrompt?.style.setProperty("display", "inline-flex");
         }
+        updateMobileAudioButton();
       };
 
       audioPlayer?.addEventListener("play", syncAudioState);
       audioPlayer?.addEventListener("pause", syncAudioState);
       audioPlayer?.addEventListener("ended", syncAudioState);
+
+      mobileAudioBtn?.addEventListener("click", async () => {
+        if (!audioPlayer) return;
+        if (audioPlayer.paused) {
+          try {
+            await audioPlayer.play();
+          } catch (err) {}
+        } else {
+          audioPlayer.pause();
+        }
+        syncAudioState();
+      });
+
+      audioPrompt?.addEventListener("click", async () => {
+        if (!audioPlayer) return;
+        try {
+          await audioPlayer.play();
+          syncAudioState();
+        } catch (err) {}
+      });
 
       const activateSectionFocus = (activeSection) => {
         sections.forEach((section) => {
@@ -1772,15 +2302,17 @@
         section.addEventListener("pointerdown", (e) => {
           if (lightbox.classList.contains("open") || milestoneModal.classList.contains("open")) return;
           const target = e.target;
-          if (target.closest(".balloon-hotspot") || target.closest(".section-link") || target.closest(".lightbox-close") || target.closest(".milestone-close")) return;
+          if (
+            target.closest(".balloon-hotspot") ||
+            target.closest(".section-link") ||
+            target.closest(".lightbox-close") ||
+            target.closest(".milestone-close") ||
+            target.closest(".video-poster-play") ||
+            target.closest(".mobile-audio-btn")
+          ) return;
           activateSectionFocus(section);
         }, { passive: true });
       });
-
-      const shineTargets = [
-        ...document.querySelectorAll(".section-image-link"),
-        ...document.querySelectorAll(".anniversary-image-layer")
-      ];
 
       if (!prefersReducedMotion) {
         shineTargets.forEach((target, index) => {
@@ -1877,7 +2409,71 @@
       if (!prefersReducedMotion) {
         runIdleNudge();
       }
+
+      const createRipple = (el, clientX, clientY) => {
+        const rect = el.getBoundingClientRect();
+        const ripple = document.createElement("span");
+        const size = Math.max(rect.width, rect.height) * 1.35;
+        ripple.className = "ripple";
+        ripple.style.width = `${size}px`;
+        ripple.style.height = `${size}px`;
+        ripple.style.left = `${clientX - rect.left}px`;
+        ripple.style.top = `${clientY - rect.top}px`;
+        el.appendChild(ripple);
+        ripple.addEventListener("animationend", () => ripple.remove());
+      };
+
+      pressables.forEach((el) => {
+        const pressStart = (e) => {
+          el.classList.remove("rebound");
+          el.classList.add("is-pressing");
+          const point = e.touches?.[0] || e;
+          if (point && typeof point.clientX === "number") {
+            createRipple(el, point.clientX, point.clientY);
+          } else {
+            const rect = el.getBoundingClientRect();
+            createRipple(el, rect.left + rect.width / 2, rect.top + rect.height / 2);
+          }
+        };
+
+        const pressEnd = () => {
+          if (!el.classList.contains("is-pressing")) return;
+          el.classList.remove("is-pressing");
+          el.classList.add("rebound");
+          setTimeout(() => el.classList.remove("rebound"), 240);
+        };
+
+        el.addEventListener("pointerdown", pressStart);
+        el.addEventListener("pointerup", pressEnd);
+        el.addEventListener("pointerleave", pressEnd);
+        el.addEventListener("pointercancel", pressEnd);
+        el.addEventListener("touchstart", pressStart, { passive: true });
+        el.addEventListener("touchend", pressEnd);
+      });
+
+      videoPlayButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const frame = btn.closest(".video-frame");
+          const iframe = frame?.querySelector("[data-video-iframe]");
+          const poster = frame?.querySelector("[data-video-container]");
+          if (!iframe || !poster) return;
+
+          const src = iframe.getAttribute("src") || "";
+          if (!src.includes("autoplay=1")) {
+            const separator = src.includes("?") ? "&" : "?";
+            iframe.setAttribute("src", `${src}${separator}autoplay=1`);
+          }
+
+          poster.style.display = "none";
+          iframe.style.display = "block";
+        });
+      });
+
+      syncAudioState();
+      updateMobileAudioButton();
     });
   </script>
 </body>
 </html>
+
+
