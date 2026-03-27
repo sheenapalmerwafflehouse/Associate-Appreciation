@@ -275,6 +275,13 @@
       text-align: center;
     }
 
+    .section h3 {
+      margin: 0;
+      text-align: center;
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      letter-spacing: 0.01em;
+    }
+
     .section p {
       color: var(--muted);
       line-height: 1.78;
@@ -338,7 +345,7 @@
     }
 
     .section-link,
-    .video-poster-play {
+    .song-toggle {
       text-decoration: none;
       color: #111;
       background: var(--yellow);
@@ -364,7 +371,7 @@
     }
 
     .section-link:hover,
-    .video-poster-play:hover {
+    .song-toggle:hover {
       transform: translateY(-2px);
       box-shadow:
         0 2px 0 rgba(92, 77, 19, 0.1),
@@ -477,25 +484,21 @@
       will-change: transform;
     }
 
-    .audio-card {
+    .song-card {
       width: 100%;
       max-width: 760px;
-      margin: 18px auto 0;
+      margin: 0 auto;
       padding: 20px;
       border: 1px solid rgba(176, 150, 44, 0.12);
-      border-radius: 22px;
-      background: linear-gradient(180deg, #fffdf2 0%, #f9f8eb 50%, #f2f6e0 100%);
+      border-radius: 24px;
+      background: linear-gradient(180deg, #fffdf2 0%, #f9f8eb 52%, #f2f6e0 100%);
       box-shadow: 0 10px 24px rgba(92, 77, 19, 0.06);
       text-align: center;
       position: relative;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
     }
 
-    .audio-card.audio-playing {
+    .song-card.audio-playing {
       border-color: rgba(245, 213, 71, 0.9);
       box-shadow:
         0 12px 30px rgba(92, 77, 19, 0.08),
@@ -503,127 +506,81 @@
         0 0 28px rgba(245, 213, 71, 0.2);
     }
 
-    .audio-prompt {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(255, 247, 200, 0.95);
-      color: #6b5b00;
-      border: 1px solid rgba(212, 176, 0, 0.18);
-      font-weight: 800;
-      font-size: 0.9rem;
-      box-shadow: 0 6px 14px rgba(92, 77, 19, 0.06);
-      cursor: pointer;
+    .song-figure {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto 18px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(176, 150, 44, 0.14);
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(92, 77, 19, 0.06);
     }
 
-    .audio-mobile-shell {
+    .song-figure .media-frame {
+      min-height: 240px;
+      background: linear-gradient(180deg, #fffef6 0%, #f8f4df 100%);
+    }
+
+    .song-layout {
       width: 100%;
-      max-width: 520px;
+      max-width: 560px;
+      margin: 20px auto 0;
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 12px;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
       align-items: center;
       text-align: left;
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.76);
       border: 1px solid rgba(176, 150, 44, 0.12);
-      border-radius: 20px;
-      padding: 12px;
+      border-radius: 22px;
+      padding: 14px;
     }
 
-    .mobile-audio-btn {
-      width: 58px;
-      height: 58px;
+    .song-toggle {
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: var(--yellow);
-      color: #111;
-      border: 1px solid rgba(176, 150, 44, 0.18);
-      box-shadow:
-        0 2px 0 rgba(92, 77, 19, 0.1),
-        0 8px 18px rgba(92, 77, 19, 0.08);
+      border: none;
       cursor: pointer;
-      font-size: 1.55rem;
+      font-size: 1.8rem;
       line-height: 1;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
     }
 
-    .mobile-audio-meta {
+    .song-meta {
       min-width: 0;
     }
 
-    .mobile-audio-label {
+    .song-label {
       font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: #7b6c00;
       font-weight: 800;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
 
-    .mobile-audio-title {
-      font-size: 0.98rem;
+    .song-title {
+      font-size: 1rem;
       font-weight: 800;
       line-height: 1.2;
       color: #1f1f1f;
     }
 
-    .mobile-audio-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 247, 200, 0.95);
-      border: 1px solid rgba(212, 176, 0, 0.18);
-      color: #7b6c00;
-      font-size: 1rem;
-      flex: 0 0 auto;
-    }
-
-    .audio-visualizer {
-      width: 100%;
-      max-width: 210px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 4px;
-      height: 30px;
-    }
-
-    .audio-wave-line {
-      width: 9px;
-      height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, #ffe66a 0%, #d4b000 100%);
-      transform-origin: bottom center;
-      opacity: 0.86;
-    }
-
-    .audio-card.audio-playing .audio-wave-line:nth-child(1) { animation: waveDance 0.82s ease-in-out infinite; }
-    .audio-card.audio-playing .audio-wave-line:nth-child(2) { animation: waveDance 1.05s ease-in-out infinite 0.05s; }
-    .audio-card.audio-playing .audio-wave-line:nth-child(3) { animation: waveDance 0.68s ease-in-out infinite 0.1s; }
-    .audio-card.audio-playing .audio-wave-line:nth-child(4) { animation: waveDance 1.12s ease-in-out infinite 0.02s; }
-    .audio-card.audio-playing .audio-wave-line:nth-child(5) { animation: waveDance 0.78s ease-in-out infinite 0.12s; }
-    .audio-card.audio-playing .audio-wave-line:nth-child(6) { animation: waveDance 0.96s ease-in-out infinite 0.04s; }
-    .audio-card.audio-playing .audio-wave-line:nth-child(7) { animation: waveDance 0.72s ease-in-out infinite 0.08s; }
-    .audio-card.audio-playing .audio-wave-line:nth-child(8) { animation: waveDance 1.08s ease-in-out infinite 0.15s; }
-    .audio-card.audio-playing .audio-wave-line:nth-child(9) { animation: waveDance 0.84s ease-in-out infinite 0.03s; }
-    .audio-card.audio-playing .audio-wave-line:nth-child(10) { animation: waveDance 1s ease-in-out infinite 0.11s; }
-
-    @keyframes waveDance {
-      0%, 100% { transform: scaleY(0.45); opacity: 0.56; }
-      25% { transform: scaleY(1.7); opacity: 0.95; }
-      50% { transform: scaleY(2.5); opacity: 1; }
-      75% { transform: scaleY(1.15); opacity: 0.85; }
+    .song-hint {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: #5d5d5d;
     }
 
     .audio-player-wrap {
       width: 100%;
-      max-width: 520px;
+      max-width: 560px;
+      margin: 16px auto 0;
       padding: 12px 14px;
       background: linear-gradient(180deg, #ffe66a 0%, var(--yellow) 100%);
       border: 1px solid rgba(176, 150, 44, 0.16);
@@ -692,62 +649,6 @@
       border: 0;
       display: block;
       border-radius: 18px;
-    }
-
-    .video-poster {
-      position: absolute;
-      inset: 0;
-      background: center / cover no-repeat;
-      display: none;
-    }
-
-    .video-poster::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(17,17,17,0.06), rgba(17,17,17,0.34));
-    }
-
-    .video-poster-content {
-      position: absolute;
-      inset: auto 14px 14px 14px;
-      z-index: 2;
-      color: #fff;
-      text-align: center;
-    }
-
-    .video-poster-title {
-      font-weight: 800;
-      font-size: 1rem;
-      line-height: 1.2;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
-    }
-
-    .video-poster-subtitle {
-      font-size: 0.84rem;
-      margin-top: 6px;
-      opacity: 0.95;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
-    }
-
-    .video-poster-play {
-      position: absolute;
-      inset: 50% auto auto 50%;
-      transform: translate(-50%, -50%);
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      z-index: 2;
-      cursor: pointer;
-    }
-
-    .video-poster-play span {
-      margin-left: 4px;
     }
 
     .anniversary-interactive {
@@ -921,6 +822,89 @@
     .balloon-45 { top: 18.5%; left: 66.5%; }
     .balloon-50 { top: 18.6%; left: 77.0%; }
 
+    .photo-flash-link {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .photo-flash-link::before {
+      content: "";
+      position: absolute;
+      inset: -8%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.5) 18%, rgba(255,255,255,0.12) 38%, rgba(255,255,255,0) 64%);
+      opacity: 0;
+      transform: scale(0.72);
+      pointer-events: none;
+      z-index: 2;
+      border-radius: 24px;
+    }
+
+    .photo-flash-link::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, rgba(255,255,255,0) 18%, rgba(255,255,255,0.66) 48%, rgba(255,255,255,0) 78%);
+      transform: translateX(-135%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .photo-flash-link:hover::before,
+    .photo-flash-link:focus-visible::before {
+      animation: photoFlashPulse 1.15s ease-out;
+    }
+
+    .photo-flash-link:hover::after,
+    .photo-flash-link:focus-visible::after {
+      animation: photoFlashSweep 1.15s ease-out;
+    }
+
+    .photo-flash-link.attention::before {
+      animation: photoFlashPulse 1.25s ease-out infinite;
+    }
+
+    .photo-flash-link.attention::after {
+      animation: photoFlashSweep 1.25s ease-out infinite;
+    }
+
+    @keyframes photoFlashPulse {
+      0% {
+        opacity: 0;
+        transform: scale(0.72);
+      }
+      16% {
+        opacity: 0.9;
+        transform: scale(1.02);
+      }
+      42% {
+        opacity: 0.28;
+        transform: scale(1.07);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.14);
+      }
+    }
+
+    @keyframes photoFlashSweep {
+      0% {
+        transform: translateX(-135%);
+        opacity: 0;
+      }
+      18% {
+        opacity: 1;
+      }
+      60% {
+        transform: translateX(135%);
+        opacity: 0.92;
+      }
+      100% {
+        transform: translateX(150%);
+        opacity: 0;
+      }
+    }
+
     .footer-decor {
       margin-top: 18px;
       background:
@@ -947,15 +931,6 @@
       text-align: center;
       position: relative;
       z-index: 1;
-    }
-
-    .footer-watermark {
-      width: 88px;
-      height: 88px;
-      object-fit: contain;
-      opacity: 0.14;
-      margin: 0 auto 14px;
-      filter: saturate(0.8);
     }
 
     .footer-thanks {
@@ -1020,18 +995,6 @@
       border-radius: 18px;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
       background: #fff;
-    }
-
-    .lightbox-caption {
-      max-width: min(900px, 88vw);
-      padding: 10px 14px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.94);
-      color: #222;
-      text-align: center;
-      font-weight: 700;
-      line-height: 1.45;
-      box-shadow: 0 12px 24px rgba(0,0,0,0.16);
     }
 
     .lightbox-close,
@@ -1172,16 +1135,20 @@
         max-width: 31ch;
       }
 
-      .audio-player-wrap {
-        display: none;
+      .song-layout {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
       }
 
-      .video-frame iframe {
-        display: none;
+      .song-meta {
+        text-align: center;
       }
 
-      .video-poster {
-        display: block;
+      .song-toggle {
+        width: 74px;
+        height: 74px;
+        font-size: 2rem;
       }
 
       .back-to-top {
@@ -1196,15 +1163,9 @@
         display: none;
       }
 
-      .footer-watermark {
-        width: 72px;
-        height: 72px;
-      }
-    }
-
-    @media (min-width: 641px) {
-      .audio-mobile-shell {
-        display: none;
+      .photo-flash-link.attention::before,
+      .photo-flash-link.attention::after {
+        animation-duration: 1.55s;
       }
     }
   </style>
@@ -1221,13 +1182,14 @@
       <div class="mini-nav-wrap" aria-label="Section Navigation">
         <nav class="mini-nav" id="mini-nav">
           <a href="about.html">Employee Assistance Program</a>
-           <a href="#trivia">Museum Tour & Trivia</a>
-           <a href="#anniversaries">Anniversaries</a>
+          <a href="#hero">Welcome</a>
+          <a href="#appreciation">Appreciation Song</a>
+          <a href="#trivia">Museum Tour &amp; Trivia</a>
+          <a href="#anniversaries">Anniversaries</a>
           <a href="#touchtunes">TouchTunes</a>
-           <a href="#dressup">Dress-Up Days</a>
-           <a href="#photo">Photo Contest</a>
+          <a href="#dressup">Dress-Up Days</a>
+          <a href="#photo">Photo Contest</a>
           <a href="#shoes-for-crews">Shoes for Crews</a>
-           <a href="#hero">Welcome</a>
         </nav>
       </div>
     </div>
@@ -1243,39 +1205,7 @@
         </div>
 
         <div class="section-image-link hero-image lightbox-trigger">
-          <img src="Images/Intro graphic (1).png" alt="Associate Appreciation" data-caption="Associate Appreciation Celebration Graphic" />
-        </div>
-
-        <div class="audio-card" id="audio-card">
-          <h3>Appreciation Song</h3>
-          <p>POV: You are a big part of why this is “America’s Place To Eat.”</p>
-
-          <div class="audio-prompt" id="audio-prompt">
-            🎵 Tap waffle to play
-          </div>
-
-          <div class="audio-mobile-shell">
-            <button class="mobile-audio-btn pressable" id="mobile-audio-btn" type="button" aria-label="Play appreciation song">🧇</button>
-
-            <div class="mobile-audio-meta">
-              <div class="mobile-audio-title">Serving Up Egg-cellence</div>
-            </div>
-
-            <div class="mobile-audio-icon" aria-hidden="true"></div>
-          </div>
-
-          <div class="audio-player-wrap">
-            <audio
-              class="audio-player"
-              controls
-              controlsList="nodownload noplaybackrate"
-              preload="metadata"
-              oncontextmenu="return false;"
-            >
-              <source src="Audio/appreciationsong.mp3" type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
-          </div>
+          <img src="Images/Intro graphic (1).png" alt="Associate Appreciation" />
         </div>
       </div>
     </section>
@@ -1294,25 +1224,62 @@
         </div>
 
         <div class="video-frame">
-          <div
-            class="video-poster"
-            data-video-container
-            style="background-image: url('Images/Intro graphic (1).png');"
-          >
-            <button class="video-poster-play pressable" type="button" data-video-play aria-label="Play CEO video"><span>▶</span></button>
-            <div class="video-poster-content">
-              <div class="video-poster-subtitle">Tap to play</div>
-            </div>
-          </div>
-
           <iframe
-            data-video-iframe
             src="https://player.vimeo.com/video/1170667363?h=50e07f30cd"
             title="Associate Appreciation Kits Info"
             frameborder="0"
             allow="autoplay; fullscreen; picture-in-picture"
             allowfullscreen>
           </iframe>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-sparkle" aria-hidden="true"></div>
+
+    <section id="appreciation" class="section featured-section">
+      <div class="section-head">
+        <div class="section-kicker">Featured</div>
+        <h2>Appreciation Song</h2>
+      </div>
+
+      <div class="song-card" id="audio-card">
+        <div class="song-figure">
+          <div class="media-frame">
+            <img src="Images/Wilson whistling.png" alt="Wilson whistling" />
+          </div>
+        </div>
+
+        <h3>Serving Up Egg-cellence</h3>
+        <p>POV: You are a big part of why this is “America’s Place To Eat.”</p>
+
+        <div class="song-layout">
+          <button
+            class="song-toggle pressable"
+            id="song-toggle"
+            type="button"
+            aria-label="Play appreciation song"
+          >🧇</button>
+
+          <div class="song-meta">
+            <div class="song-label">Appreciation Song</div>
+            <div class="song-title">Tap the waffle to play</div>
+            <div class="song-hint">Desktop and mobile friendly</div>
+          </div>
+        </div>
+
+        <div class="audio-player-wrap">
+          <audio
+            class="audio-player"
+            id="audio-player"
+            controls
+            controlsList="nodownload noplaybackrate"
+            preload="metadata"
+            oncontextmenu="return false;"
+          >
+            <source src="Audio/appreciationsong.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
         </div>
       </div>
     </section>
@@ -1327,7 +1294,7 @@
       <div class="section-image-wrap">
         <div class="section-image-link lightbox-trigger">
           <div class="media-frame">
-            <img src="Images/2026 Associate Appreciation Dress-Up Days (2).png" alt="Dress-up Schedule" data-caption="2026 Associate Appreciation Dress-Up Days" />
+            <img src="Images/2026 Associate Appreciation Dress-Up Days (2).png" alt="Dress-up Schedule" />
           </div>
         </div>
 
@@ -1353,7 +1320,7 @@
         <div class="anniversary-interactive">
           <div class="anniversary-image-layer lightbox-trigger">
             <div class="media-frame">
-              <img src="Images/Anniversary Landing Page Graphic (8).png" alt="Anniversaries" data-caption="Anniversary Milestone Celebration Graphic" />
+              <img src="Images/Anniversary Landing Page Graphic (8).png" alt="Anniversaries" />
             </div>
           </div>
 
@@ -1378,7 +1345,9 @@
         <div class="section-copy">
           <p class="anniversary-summary">
             Celebrating over 16,000 Associates for their dedication and service. Tap the balloons to see how many are celebrating each milestone.
-         
+          </p>
+        </div>
+      </div>
     </section>
 
     <div class="divider-sparkle" aria-hidden="true"></div>
@@ -1392,7 +1361,7 @@
       <div class="section-image-wrap">
         <div class="section-image-link lightbox-trigger">
           <div class="media-frame">
-            <img src="Images/Museum Tour.png" alt="Museum Tour and Trivia" data-caption="Museum Tour and Trivia Graphic" />
+            <img src="Images/Museum Tour.png" alt="Museum Tour and Trivia" />
           </div>
         </div>
 
@@ -1402,25 +1371,13 @@
           </div>
 
           <div class="video-frame">
-            <div
-              class="video-poster"
-              data-video-container
-              style="background-image: url('Images/Museum Tour.png');"
-            >
-              <button class="video-poster-play pressable" type="button" data-video-play aria-label="Play museum tour video"><span>▶</span></button>
-              <div class="video-poster-content">
-                <div class="video-poster-subtitle">Tap to play</div>
-              </div>
-            </div>
-
             <iframe
-              data-video-iframe
               src="https://player.vimeo.com/video/1170667363?h=50e07f30cd"
               title="Museum Tour Video"
               frameborder="0"
               allow="autoplay; fullscreen; picture-in-picture"
               allowfullscreen>
-          </iframe>
+            </iframe>
           </div>
         </div>
 
@@ -1448,9 +1405,9 @@
       </div>
 
       <div class="section-image-wrap">
-        <div class="section-image-link lightbox-trigger">
+        <div class="section-image-link lightbox-trigger photo-flash-link attention" id="photo-flash-link">
           <div class="media-frame">
-            <img src="Images/2026 ASSOCIATE APPRECIATION PHOTO CONTEST.jpg" alt="Photo Contest" data-caption="2026 Associate Appreciation Photo Contest" />
+            <img src="Images/2026 ASSOCIATE APPRECIATION PHOTO CONTEST.jpg" alt="Photo Contest" />
           </div>
         </div>
 
@@ -1480,7 +1437,7 @@
       <div class="section-image-wrap">
         <div class="section-image-link lightbox-trigger">
           <div class="media-frame">
-            <img src="Images/Shoes for Crews.png" alt="Shoes For Crews Collection" data-caption="Shoes For Crews Collection" />
+            <img src="Images/Shoes for Crews.png" alt="Shoes For Crews Collection" />
           </div>
         </div>
 
@@ -1511,7 +1468,7 @@
       <div class="section-image-wrap">
         <div class="section-image-link lightbox-trigger">
           <div class="media-frame">
-            <img src="Images/touchtunes.png" alt="TouchTunes" data-caption="TouchTunes Weekly Credits Graphic" />
+            <img src="Images/touchtunes.png" alt="TouchTunes" />
           </div>
         </div>
 
@@ -1562,7 +1519,6 @@
     <div class="lightbox-inner">
       <button class="lightbox-close" type="button" aria-label="Close image">&times;</button>
       <img id="lightbox-image" src="" alt="" />
-      <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
   </div>
 
@@ -1588,24 +1544,22 @@
       const sections = Array.from(document.querySelectorAll(".section"));
       const lightbox = document.getElementById("lightbox");
       const lightboxImage = document.getElementById("lightbox-image");
-      const lightboxCaption = document.getElementById("lightbox-caption");
       const lightboxClose = document.querySelector(".lightbox-close");
       const milestoneModal = document.getElementById("milestone-modal");
       const milestoneTitle = document.getElementById("milestone-title");
       const milestoneText = document.getElementById("milestone-text");
       const milestoneClose = document.querySelector(".milestone-close");
       const balloonHotspots = document.querySelectorAll(".balloon-hotspot");
-      const audioPlayer = document.querySelector(".audio-player");
+      const audioPlayer = document.getElementById("audio-player");
       const audioCard = document.getElementById("audio-card");
-      const audioPrompt = document.getElementById("audio-prompt");
-      const mobileAudioBtn = document.getElementById("mobile-audio-btn");
+      const songToggle = document.getElementById("song-toggle");
       const anniversaryTip = document.getElementById("anniversary-tip");
       const triggers = document.querySelectorAll(".lightbox-trigger");
       const backToTop = document.getElementById("back-to-top");
       const heroImage = document.querySelector(".hero-image img");
       const miniNavLinks = Array.from(document.querySelectorAll(".mini-nav a"));
-      const videoPlayButtons = document.querySelectorAll("[data-video-play]");
       const pressables = document.querySelectorAll(".pressable");
+      const photoFlashLink = document.getElementById("photo-flash-link");
 
       let confettiFired = false;
       let nudgeTimer;
@@ -1690,7 +1644,6 @@
       const openLightbox = (img) => {
         lightboxImage.src = img.src;
         lightboxImage.alt = img.alt || "";
-        lightboxCaption.textContent = img.dataset.caption || img.alt || "";
         lightbox.classList.add("open");
         lightbox.setAttribute("aria-hidden", "false");
         document.body.classList.add("lightbox-open");
@@ -1703,7 +1656,6 @@
         setTimeout(() => {
           lightboxImage.src = "";
           lightboxImage.alt = "";
-          lightboxCaption.textContent = "";
         }, 180);
       };
 
@@ -1809,47 +1761,39 @@
 
       audioPlayer?.addEventListener("contextmenu", (e) => e.preventDefault());
 
-      const updateMobileAudioButton = () => {
-        if (!mobileAudioBtn) return;
-        mobileAudioBtn.textContent = audioPlayer && !audioPlayer.paused && !audioPlayer.ended ? "❚❚" : "🧇";
-        mobileAudioBtn.setAttribute(
+      const updateSongButton = () => {
+        if (!songToggle || !audioPlayer) return;
+        const playing = !audioPlayer.paused && !audioPlayer.ended;
+        songToggle.textContent = playing ? "❚❚" : "🧇";
+        songToggle.setAttribute(
           "aria-label",
-          audioPlayer && !audioPlayer.paused && !audioPlayer.ended ? "Pause appreciation song" : "Play appreciation song"
+          playing ? "Pause appreciation song" : "Play appreciation song"
         );
       };
 
       const syncAudioState = () => {
         if (!audioPlayer || !audioCard) return;
-        if (!audioPlayer.paused && !audioPlayer.ended) {
-          audioCard.classList.add("audio-playing");
-          if (audioPrompt) audioPrompt.style.display = "none";
-        } else {
-          audioCard.classList.remove("audio-playing");
-          if (audioPrompt) audioPrompt.style.display = "inline-flex";
-        }
-        updateMobileAudioButton();
+        const playing = !audioPlayer.paused && !audioPlayer.ended;
+        audioCard.classList.toggle("audio-playing", playing);
+        updateSongButton();
       };
 
       audioPlayer?.addEventListener("play", syncAudioState);
       audioPlayer?.addEventListener("pause", syncAudioState);
       audioPlayer?.addEventListener("ended", syncAudioState);
 
-      mobileAudioBtn?.addEventListener("click", async () => {
+      songToggle?.addEventListener("click", async () => {
         if (!audioPlayer) return;
+
         if (audioPlayer.paused) {
-          try { await audioPlayer.play(); } catch (err) {}
+          try {
+            await audioPlayer.play();
+          } catch (err) {}
         } else {
           audioPlayer.pause();
         }
-        syncAudioState();
-      });
 
-      audioPrompt?.addEventListener("click", async () => {
-        if (!audioPlayer) return;
-        try {
-          await audioPlayer.play();
-          syncAudioState();
-        } catch (err) {}
+        syncAudioState();
       });
 
       const showAnniversaryTip = () => {
@@ -1937,26 +1881,30 @@
         el.addEventListener("touchend", pressEnd);
       });
 
-      videoPlayButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const frame = btn.closest(".video-frame");
-          const iframe = frame?.querySelector("[data-video-iframe]");
-          const poster = frame?.querySelector("[data-video-container]");
-          if (!iframe || !poster) return;
+      if (!prefersReducedMotion && photoFlashLink) {
+        const pausePhotoAttention = () => {
+          photoFlashLink.classList.remove("attention");
+          setTimeout(() => {
+            if (document.visibilityState === "visible") {
+              photoFlashLink.classList.add("attention");
+            }
+          }, isMobile ? 1400 : 900);
+        };
 
-          const src = iframe.getAttribute("src") || "";
-          if (!src.includes("autoplay=1")) {
-            const separator = src.includes("?") ? "&" : "?";
-            iframe.setAttribute("src", `${src}${separator}autoplay=1`);
+        photoFlashLink.addEventListener("click", pausePhotoAttention);
+        photoFlashLink.addEventListener("pointerenter", () => photoFlashLink.classList.remove("attention"));
+
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "hidden") {
+            photoFlashLink.classList.remove("attention");
+          } else {
+            photoFlashLink.classList.add("attention");
           }
-
-          poster.style.display = "none";
-          iframe.style.display = "block";
         });
-      });
+      }
 
       syncAudioState();
-      updateMobileAudioButton();
+      updateSongButton();
     });
   </script>
 </body>
