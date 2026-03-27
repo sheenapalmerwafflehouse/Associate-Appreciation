@@ -22,9 +22,7 @@
       --page-warmth: 0;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
@@ -70,9 +68,7 @@
       display: block;
     }
 
-    button {
-      font: inherit;
-    }
+    button { font: inherit; }
 
     #scroll-progress {
       position: fixed;
@@ -119,9 +115,7 @@
       transition: transform 0.3s ease;
     }
 
-    .nav-logo:hover {
-      transform: scale(1.05);
-    }
+    .nav-logo:hover { transform: scale(1.05); }
 
     .mini-nav-wrap {
       width: 100%;
@@ -131,9 +125,7 @@
       scrollbar-width: none;
     }
 
-    .mini-nav-wrap::-webkit-scrollbar {
-      display: none;
-    }
+    .mini-nav-wrap::-webkit-scrollbar { display: none; }
 
     .mini-nav {
       display: flex;
@@ -221,10 +213,7 @@
       border: 1px solid var(--border);
       border-radius: 28px;
       box-shadow: var(--shadow);
-      transition:
-        transform 0.35s ease,
-        box-shadow 0.35s ease,
-        border-color 0.3s ease;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s ease;
       position: relative;
       overflow: hidden;
     }
@@ -332,9 +321,7 @@
       transform: scale(1.03);
     }
 
-    .section-copy {
-      margin-top: 20px;
-    }
+    .section-copy { margin-top: 20px; }
 
     .links {
       display: flex;
@@ -385,9 +372,7 @@
       border-color: rgba(212, 176, 0, 0.28);
     }
 
-    .pressable {
-      will-change: transform;
-    }
+    .pressable { will-change: transform; }
 
     .pressable.is-pressing {
       transform: scale(0.965);
@@ -396,9 +381,7 @@
         0 4px 10px rgba(92, 77, 19, 0.1);
     }
 
-    .pressable.rebound {
-      animation: pressRebound 220ms ease-out;
-    }
+    .pressable.rebound { animation: pressRebound 220ms ease-out; }
 
     @keyframes pressRebound {
       0% { transform: scale(0.97); }
@@ -551,9 +534,7 @@
       font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
     }
 
-    .song-meta {
-      min-width: 0;
-    }
+    .song-meta { min-width: 0; }
 
     .song-label {
       font-size: 0.76rem;
@@ -643,6 +624,104 @@
       border: 0;
       display: block;
       border-radius: 18px;
+    }
+
+    .lyric-video-shell {
+      width: 100%;
+      max-width: 760px;
+      margin: 22px auto 0;
+      padding: 12px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,247,237,0.92));
+      border: 1px solid rgba(176, 150, 44, 0.14);
+      box-shadow: 0 14px 28px rgba(92, 77, 19, 0.07);
+    }
+
+    .lyric-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 20px;
+      border: 1px solid rgba(176, 150, 44, 0.12);
+      background:
+        linear-gradient(rgba(34, 49, 74, 0.20), rgba(34, 49, 74, 0.28)),
+        url("Images/WILSON.png") center / cover no-repeat;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+    }
+
+    .lyric-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02) 36%, rgba(10,17,30,0.10) 100%),
+        radial-gradient(circle at 50% 26%, rgba(255,255,255,0.10), rgba(255,255,255,0) 42%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .lyric-stage::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 28%;
+      background: linear-gradient(180deg, rgba(10,17,30,0), rgba(10,17,30,0.18));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .lyric-line-host {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .lyric-line {
+      position: absolute;
+      left: 50%;
+      width: min(84%, 560px);
+      transform: translateX(-50%) translateY(18px);
+      opacity: 0;
+      text-align: center;
+      color: rgba(255,255,255,0.98);
+      font-weight: 800;
+      font-size: clamp(22px, 2vw, 32px);
+      line-height: 1.16;
+      letter-spacing: 0.01em;
+      text-shadow:
+        0 2px 10px rgba(0,0,0,0.30),
+        0 0 12px rgba(0,0,0,0.18);
+      transition:
+        opacity 0.40s ease,
+        transform 0.40s ease,
+        filter 0.40s ease;
+      filter: blur(1px);
+      will-change: transform, opacity;
+    }
+
+    .lyric-line.active {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      filter: blur(0);
+    }
+
+    .lyric-line.exiting {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-12px);
+      filter: blur(2px);
+    }
+
+    .lyric-scrubber-wrap {
+      width: 100%;
+      max-width: 760px;
+      margin: 12px auto 0;
+    }
+
+    .lyric-scrubber {
+      width: 100%;
+      accent-color: #111111;
     }
 
     .anniversary-interactive {
@@ -1081,137 +1160,7 @@
       transform: translateY(0) scale(1);
     }
 
-    .audio-player-wrap {
-      display: none;
-    }
-
-    .lyric-video-shell {
-      width: 100%;
-      max-width: 760px;
-      margin: 22px auto 0;
-      padding: 12px;
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,247,237,0.92));
-      border: 1px solid rgba(176, 150, 44, 0.14);
-      box-shadow: 0 14px 28px rgba(92, 77, 19, 0.07);
-    }
-
-    .lyric-stage {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      border-radius: 20px;
-      border: 1px solid rgba(176, 150, 44, 0.12);
-      background:
-        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.24) 0 70px, transparent 76px),
-        radial-gradient(circle at 76% 18%, rgba(255,255,255,0.20) 0 90px, transparent 98px),
-        radial-gradient(circle at 82% 76%, rgba(255,255,255,0.16) 0 110px, transparent 120px),
-        linear-gradient(180deg, #7dbaf0 0%, #bfe1fb 56%, #ecf7ff 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
-    }
-
-    .lyric-stage::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0) 62%),
-        linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .lyric-stage::after {
-      content: "";
-      position: absolute;
-      inset: auto 0 0 0;
-      height: 26%;
-      background: linear-gradient(180deg, rgba(236,247,255,0), rgba(236,247,255,0.82));
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .lyric-floating-shapes {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .lyric-floating-shapes span {
-      position: absolute;
-      display: block;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.18);
-      filter: blur(2px);
-      animation: ambientDrift linear infinite alternate;
-    }
-
-    .lyric-floating-shapes span:nth-child(1) { left: 8%;  top: 14%; width: 130px; height: 34px; animation-duration: 18s; }
-    .lyric-floating-shapes span:nth-child(2) { left: 62%; top: 11%; width: 150px; height: 40px; animation-duration: 22s; }
-    .lyric-floating-shapes span:nth-child(3) { left: 18%; top: 52%; width: 170px; height: 44px; animation-duration: 20s; }
-    .lyric-floating-shapes span:nth-child(4) { left: 64%; top: 62%; width: 180px; height: 46px; animation-duration: 24s; }
-    .lyric-floating-shapes span:nth-child(5) { left: 36%; top: 76%; width: 140px; height: 36px; animation-duration: 19s; }
-
-    .lyric-line-host {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .lyric-line {
-      position: absolute;
-      left: 50%;
-      width: min(84%, 540px);
-      transform: translateX(-50%) translateY(18px);
-      opacity: 0;
-      text-align: center;
-      color: rgba(255,255,255,0.98);
-      font-weight: 800;
-      font-size: clamp(22px, 2vw, 32px);
-      line-height: 1.16;
-      letter-spacing: 0.01em;
-      text-shadow:
-        0 2px 10px rgba(34, 54, 86, 0.18),
-        0 0 16px rgba(255,255,255,0.22);
-      transition:
-        opacity 0.9s ease,
-        transform 0.9s ease,
-        filter 0.9s ease;
-      filter: blur(1px);
-      will-change: transform, opacity;
-    }
-
-    .lyric-line.active {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-      filter: blur(0);
-    }
-
-    .lyric-line.exiting {
-      opacity: 0;
-      transform: translateX(-50%) translateY(-12px);
-      filter: blur(2px);
-    }
-
-    .lyric-scrubber-wrap {
-      width: 100%;
-      max-width: 760px;
-      margin: 12px auto 0;
-    }
-
-    .lyric-scrubber {
-      width: 100%;
-      accent-color: #111111;
-    }
-
-    @keyframes ambientDrift {
-      from { transform: translateX(-10px); }
-      to { transform: translateX(12px); }
-    }
+    .audio-player-wrap { display: none; }
 
     @media (max-width: 900px) {
       .nav-logo { height: 68px; }
@@ -1219,22 +1168,16 @@
     }
 
     @media (max-width: 640px) {
-      :root {
-        --media-frame-min-height: 260px;
-      }
+      :root { --media-frame-min-height: 260px; }
 
-      html {
-        scroll-padding-top: 126px;
-      }
+      html { scroll-padding-top: 126px; }
 
       .topbar-inner {
         padding-top: 8px;
         gap: 6px;
       }
 
-      .sections {
-        padding: 18px 14px 14px;
-      }
+      .sections { padding: 18px 14px 14px; }
 
       .divider-sparkle {
         width: min(180px, 54vw);
@@ -1247,13 +1190,9 @@
         margin-bottom: 24px;
       }
 
-      .hero-card {
-        padding: 14px;
-      }
+      .hero-card { padding: 14px; }
 
-      .section-image-wrap {
-        max-width: 100%;
-      }
+      .section-image-wrap { max-width: 100%; }
 
       .section p {
         line-height: 1.72;
@@ -1267,9 +1206,7 @@
         text-align: center;
       }
 
-      .song-meta {
-        text-align: center;
-      }
+      .song-meta { text-align: center; }
 
       .song-toggle {
         width: 74px;
@@ -1290,9 +1227,7 @@
         padding: 0 14px;
       }
 
-      .back-to-top .label {
-        display: none;
-      }
+      .back-to-top .label { display: none; }
 
       .photo-flash-link.attention::before,
       .photo-flash-link.attention::after {
@@ -1377,7 +1312,7 @@
       <div class="song-card" id="audio-card">
         <div class="song-figure">
           <div class="media-frame">
-            <img src="Images/Wilson.png" alt="Wilson" />
+            <img src="Images/WILSON.png" alt="Wilson" />
           </div>
         </div>
         <p>POV: You are a big part of why this is “America’s Place To Eat.”</p>
@@ -1412,13 +1347,6 @@
 
         <div class="lyric-video-shell">
           <div class="lyric-stage" id="lyric-stage">
-            <div class="lyric-floating-shapes" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
             <div class="lyric-line-host" id="lyric-line-host"></div>
           </div>
         </div>
@@ -1429,7 +1357,7 @@
             id="lyric-scrubber"
             class="lyric-scrubber"
             min="0"
-            max="128"
+            max="152"
             step="0.1"
             value="0"
             aria-label="Lyric timing scrubber"
@@ -1717,49 +1645,50 @@
       const lyricLineHost = document.getElementById("lyric-line-host");
       const lyricScrubber = document.getElementById("lyric-scrubber");
 
+      // Karaoke-paced timings tuned to the uploaded 151.56s audio.
       const lyricLines = [
-        { start: 12.0,   end: 14.0,   top: "16%", text: "Globe light glowing\non the corner booth" },
-        { start: 14.1,   end: 16.0,   top: "34%", text: "Name tag greeted by\nthe coffee steam" },
-        { start: 16.1,   end: 19.0,  top: "22%", text: "You remember how\nI like my food" },
-        { start: 19.1,  end: 21.0,  top: "42%", text: "Starting early mornings off\nwith what I need" },
-        { start: 16.5,  end: 20.0,  top: "26%", text: "But I see more than\nwhat’s in sight" },
-        { start: 20.0,  end: 23.2,  top: "46%", text: "Tools moving behind\nthe scenes" },
-        { start: 23.2,  end: 26.8,  top: "66%", text: "Keeping everything\nworking right" },
+        { start: 11.0,   end: 15.8.,   top: "16%", text: "Globe light glowing\non the corner booth" },
+        { start: 14.0,   end: 16.8,   top: "34%", text: "Name tag greeted by\nthe coffee steam" },
+        { start: 17.0,   end: 18.9,  top: "22%", text: "You remember how\nI like my food" },
+        { start: 19.0,  end: 21.0,  top: "42%", text: "Starting early mornings off\nwith what I need" },
+        { start: 21.1,  end: 24.9,  top: "26%", text: "But I see more than\nwhat’s in sight" },
+        { start: 25.0,  end: 27.9,  top: "46%", text: "Tools moving behind\nthe scenes" },
+        { start: 28.0,  end: 30.0,  top: "66%", text: "Keeping everything\nworking right" },
 
-        { start: 26.8,  end: 30.5,  top: "20%", text: "So here’s to you" },
-        { start: 30.5,  end: 34.5,  top: "38%", text: "Serving up\negg-cellence" },
-        { start: 34.5,  end: 40.5,  top: "58%", text: "Every pour, every plate,\nevery smile makes a difference" },
-        { start: 40.5,  end: 47.0,  top: "28%", text: "From the front to the back,\nevery role you play" },
-        { start: 47.0,  end: 52.4,  top: "50%", text: "Keeps Waffle House running\nday to day" },
-        { start: 52.4,  end: 56.5,  top: "70%", text: "I’m grateful for the care you bring" },
-        { start: 56.5,  end: 59.5,  top: "24%", text: "Thank you for everything" },
+        { start: 27.2,  end: 30.1,  top: "18%", text: "So here’s to you" },
+        { start: 30.1,  end: 33.5,  top: "34%", text: "Serving up\negg-cellence" },
+        { start: 33.5,  end: 38.8,  top: "56%", text: "Every pour, every plate,\nevery smile makes a difference" },
+        { start: 38.8,  end: 44.2,  top: "26%", text: "From the front to the back,\nevery role you play" },
+        { start: 44.2,  end: 48.8,  top: "48%", text: "Keeps Waffle House running\nday to day" },
+        { start: 48.8,  end: 52.0,  top: "68%", text: "I’m grateful for the care you bring" },
+        { start: 52.0,  end: 55.6,  top: "24%", text: "Thank you for everything" },
 
-        { start: 59.5,  end: 62.4,  top: "18%", text: "Hash browns crisp" },
-        { start: 62.4,  end: 65.2,  top: "34%", text: "Toast on the side" },
-        { start: 65.2,  end: 69.0,  top: "52%", text: "Callbacks hit\nright on time" },
-        { start: 69.0,  end: 74.0,  top: "26%", text: "You’ve got my order in\nbefore the drinks" },
-        { start: 74.0,  end: 79.0,  top: "50%", text: "You hold the night while\nthe world sleeps tight" },
+        { start: 55.6,  end: 58.5,  top: "18%", text: "Hash browns crisp" },
+        { start: 58.5,  end: 61.4,  top: "34%", text: "Toast on the side" },
+        { start: 61.4,  end: 64.8,  top: "52%", text: "Callbacks hit\nright on time" },
+        { start: 64.8,  end: 69.2,  top: "26%", text: "You’ve got my order in\nbefore the drinks" },
+        { start: 69.2,  end: 74.2,  top: "50%", text: "You hold the night while\nthe world sleeps tight" },
 
-        { start: 79.0,  end: 82.6,  top: "18%", text: "So here’s to you" },
-        { start: 82.6,  end: 86.2,  top: "36%", text: "Serving up\negg-cellence" },
-        { start: 86.2,  end: 92.4,  top: "58%", text: "Every pour, every plate,\nevery smile makes a difference" },
-        { start: 92.4,  end: 98.6,  top: "26%", text: "From the front to the back,\nevery role you play" },
-        { start: 98.6,  end: 103.8, top: "48%", text: "Keeps Waffle House running\nday to day" },
-        { start: 103.8, end: 107.8, top: "68%", text: "I’m grateful for the care you bring" },
-        { start: 107.8, end: 110.3, top: "24%", text: "Thank you for everything" },
+        { start: 74.2,  end: 77.3,  top: "18%", text: "So here’s to you" },
+        { start: 77.3,  end: 80.8,  top: "34%", text: "Serving up\negg-cellence" },
+        { start: 80.8,  end: 86.0,  top: "56%", text: "Every pour, every plate,\nevery smile makes a difference" },
+        { start: 86.0,  end: 91.1,  top: "26%", text: "From the front to the back,\nevery role you play" },
+        { start: 91.1,  end: 95.8,  top: "48%", text: "Keeps Waffle House running\nday to day" },
+        { start: 95.8,  end: 99.1,  top: "68%", text: "I’m grateful for the care you bring" },
+        { start: 99.1,  end: 102.4, top: "24%", text: "Thank you for everything" },
 
-        { start: 110.3, end: 114.6, top: "18%", text: "And I notice how\nyou move as one" },
-        { start: 114.6, end: 118.4, top: "36%", text: "Pulling, Marking,\ndropping too" },
-        { start: 118.4, end: 122.5, top: "54%", text: "Prepping, cleaning,\ncoaching strong" },
-        { start: 122.5, end: 126.6, top: "26%", text: "The hospitality,\nthe attention you give" },
-        { start: 126.6, end: 130.8, top: "50%", text: "It all comes together\nin America’s Place" },
-        { start: 130.8, end: 134.4, top: "70%", text: "Because of you each day" },
+        { start: 102.4, end: 106.2, top: "18%", text: "And I notice how\nyou move as one" },
+        { start: 106.2, end: 109.8, top: "34%", text: "Pulling, Marking,\ndropping too" },
+        { start: 109.8, end: 113.5, top: "52%", text: "Prepping, cleaning,\ncoaching strong" },
+        { start: 113.5, end: 118.3, top: "24%", text: "The hospitality,\nthe attention you give" },
+        { start: 118.3, end: 123.0, top: "46%", text: "It all comes together\nin America’s Place" },
+        { start: 123.0, end: 126.5, top: "68%", text: "Because of you each day" },
 
-        { start: 134.4, end: 137.6, top: "20%", text: "So here’s to you" },
-        { start: 137.6, end: 141.0, top: "40%", text: "Serving up egg-cellence" },
-        { start: 141.0, end: 144.4, top: "56%", text: "Serving up egg-cellence" },
-        { start: 144.4, end: 148.0, top: "72%", text: "Serving up egg-cellence" },
-        { start: 148.0, end: 152.0, top: "42%", text: "Thank you" }
+        { start: 126.5, end: 129.5, top: "22%", text: "So here’s to you" },
+        { start: 129.5, end: 134.8, top: "40%", text: "Serving up egg-cellence" },
+        { start: 134.8, end: 140.2, top: "56%", text: "Serving up egg-cellence" },
+        { start: 140.2, end: 146.0, top: "72%", text: "Serving up egg-cellence" },
+        { start: 146.0, end: 151.56, top: "42%", text: "Thank you" }
       ];
 
       const lyricNodes = lyricLineHost
@@ -1785,13 +1714,13 @@
           el.classList.toggle("exiting", active && progress > 0.84);
 
           if (active) {
-            const driftX = -50 + progress * 2.4;
-            const driftY = progress < 0.5 ? 6 - progress * 12 : -6 + (progress - 0.5) * 8;
+            const driftX = -50 + progress * 2.2;
+            const driftY = progress < 0.5 ? 5 - progress * 10 : -5 + (progress - 0.5) * 6;
             el.style.transform = `translateX(${driftX}%) translateY(${driftY}px)`;
-            el.style.opacity = progress < 0.12
-              ? (progress / 0.12).toFixed(3)
-              : progress > 0.88
-                ? ((1 - progress) / 0.12).toFixed(3)
+            el.style.opacity = progress < 0.10
+              ? (progress / 0.10).toFixed(3)
+              : progress > 0.90
+                ? ((1 - progress) / 0.10).toFixed(3)
                 : "1";
           } else {
             el.style.transform = "translateX(-50%) translateY(18px)";
@@ -1799,9 +1728,7 @@
           }
         });
 
-        if (lyricScrubber) {
-          lyricScrubber.value = t;
-        }
+        if (lyricScrubber) lyricScrubber.value = t;
       };
 
       let confettiFired = false;
