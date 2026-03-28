@@ -61,10 +61,9 @@
       overflow: hidden;
     }
 
+    html.milestone-open,
     body.milestone-open {
       overflow: hidden;
-      position: fixed;
-      width: 100%;
     }
 
     img {
@@ -494,22 +493,6 @@
         0 0 28px rgba(245, 213, 71, 0.2);
     }
 
-    .song-figure {
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto 18px;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(176, 150, 44, 0.14);
-      background: #fff;
-      box-shadow: 0 8px 22px rgba(92, 77, 19, 0.06);
-    }
-
-    .song-figure .media-frame {
-      min-height: 240px;
-      background: linear-gradient(180deg, #fffef6 0%, #f8f4df 100%);
-    }
-
     .song-layout {
       width: 100%;
       max-width: 560px;
@@ -562,17 +545,12 @@
     }
 
     .audio-player-wrap {
-      width: 100%;
-      max-width: 560px;
-      margin: 16px auto 0;
-      padding: 12px 14px;
-      background: linear-gradient(180deg, #ffe66a 0%, var(--yellow) 100%);
-      border: 1px solid rgba(176, 150, 44, 0.16);
-      border-radius: 999px;
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.75),
-        0 2px 0 rgba(92, 77, 19, 0.08),
-        0 10px 18px rgba(92, 77, 19, 0.1);
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .audio-player {
@@ -649,12 +627,14 @@
     .lyric-stage {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 9;
+      max-width: 720px;
+      aspect-ratio: 720 / 706;
       overflow: hidden;
       border-radius: 20px;
       border: 1px solid rgba(176, 150, 44, 0.12);
       background: linear-gradient(180deg, #eaf6ff 0%, #f3f9ff 100%);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+      margin: 0 auto;
     }
 
     .lyric-bg-video {
@@ -701,14 +681,15 @@
     .lyric-line {
       position: absolute;
       left: 50%;
-      width: min(84%, 560px);
+      width: calc(100% - 36px);
+      max-width: 92%;
       transform: translateX(-50%) translateY(18px);
       opacity: 0;
       text-align: center;
       color: rgba(255,255,255,0.98);
       font-weight: 800;
-      font-size: clamp(22px, 2vw, 32px);
-      line-height: 1.16;
+      font-size: clamp(16px, 4.4vw, 30px);
+      line-height: 1.15;
       letter-spacing: 0.01em;
       white-space: pre-line;
       text-shadow:
@@ -724,11 +705,13 @@
 
     .lyric-line.active {
       opacity: 1;
+      transform: translateX(-50%) translateY(0);
       filter: blur(0);
     }
 
     .lyric-line.exiting {
       opacity: 0;
+      transform: translateX(-50%) translateY(-12px);
       filter: blur(2px);
     }
 
@@ -1056,7 +1039,6 @@
       visibility: hidden;
       pointer-events: none;
       transition: opacity 0.25s ease, visibility 0.25s ease;
-      z-index: 5000;
     }
 
     .lightbox {
@@ -1064,6 +1046,15 @@
       align-items: center;
       justify-content: center;
       padding: 28px;
+      z-index: 5000;
+    }
+
+    .milestone-modal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 99999;
     }
 
     .lightbox.open,
@@ -1112,18 +1103,10 @@
       right: -14px;
     }
 
-    .milestone-modal {
-      min-height: 100dvh;
-      display: grid;
-      place-items: center;
-      padding: clamp(16px, 3vw, 28px);
-      overflow-y: auto;
-    }
-
     .milestone-modal-inner {
       position: relative;
-      width: min(420px, calc(100vw - 32px));
-      margin: auto;
+      width: min(420px, 92vw);
+      margin: 0;
       background: linear-gradient(180deg, #fffdf2 0%, #f7f8e8 50%, #f1f6dc 100%);
       border: 1px solid rgba(176, 150, 44, 0.14);
       border-radius: 24px;
@@ -1200,15 +1183,6 @@
       transform: translateY(0) scale(1);
     }
 
-    .audio-player-wrap {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-    }
-
     @media (max-width: 900px) {
       .nav-logo { height: 68px; }
       .section { max-width: 760px; }
@@ -1253,9 +1227,15 @@
         font-size: 2rem;
       }
 
+      .lyric-stage {
+        aspect-ratio: 1 / 1;
+      }
+
       .lyric-line {
-        width: min(88%, 420px);
-        font-size: clamp(18px, 5.8vw, 28px);
+        width: calc(100% - 24px);
+        max-width: 94%;
+        font-size: clamp(15px, 5vw, 24px);
+        line-height: 1.12;
       }
 
       .back-to-top {
@@ -1391,6 +1371,7 @@
               aria-hidden="true"
             >
               <source src="Images/Wilson.mp4" type="video/mp4" />
+              <source src="Images/Wilson.webm" type="video/webm" />
             </video>
 
             <div class="lyric-line-host" id="lyric-line-host"></div>
@@ -1690,6 +1671,7 @@
       const photoFlashLink = document.getElementById("photo-flash-link");
       const lyricLineHost = document.getElementById("lyric-line-host");
       const lyricScrubber = document.getElementById("lyric-scrubber");
+      const lyricStage = document.getElementById("lyric-stage");
       const lyricBgVideo = document.getElementById("lyric-bg-video");
 
       const lyricLines = [
@@ -1781,7 +1763,6 @@
       let nudgeTimer;
       let tipShown = false;
       let lastInteractionTime = Date.now();
-      let milestoneScrollY = 0;
 
       const markInteraction = () => {
         lastInteractionTime = Date.now();
@@ -1918,8 +1899,7 @@
         milestoneTitle.textContent = `${years} ${yearWord}`;
         milestoneText.textContent = `${formatCount(numericCount)} ${associateWord} ${verbWord} celebrating ${years} ${yearWord} of service.`;
 
-        milestoneScrollY = window.scrollY;
-        document.body.style.top = `-${milestoneScrollY}px`;
+        document.documentElement.classList.add("milestone-open");
         document.body.classList.add("milestone-open");
 
         milestoneModal.classList.add("open");
@@ -1930,9 +1910,8 @@
         milestoneModal.classList.remove("open");
         milestoneModal.setAttribute("aria-hidden", "true");
 
+        document.documentElement.classList.remove("milestone-open");
         document.body.classList.remove("milestone-open");
-        document.body.style.top = "";
-        window.scrollTo(0, milestoneScrollY);
       };
 
       const popBalloonEffect = (spot) => {
@@ -1982,6 +1961,8 @@
         }
       });
 
+      audioPlayer?.addEventListener("contextmenu", (e) => e.preventDefault());
+
       const updateSongButton = () => {
         if (!songToggle || !audioPlayer) return;
         const playing = !audioPlayer.paused && !audioPlayer.ended;
@@ -1994,6 +1975,7 @@
 
       const syncLyricVideo = () => {
         if (!audioPlayer || !lyricBgVideo) return;
+
         const playing = !audioPlayer.paused && !audioPlayer.ended;
 
         if (playing) {
@@ -2013,8 +1995,6 @@
         updateSongButton();
         syncLyricVideo();
       };
-
-      audioPlayer?.addEventListener("contextmenu", (e) => e.preventDefault());
 
       audioPlayer?.addEventListener("play", () => {
         syncAudioState();
@@ -2045,14 +2025,15 @@
         renderLyrics();
       });
 
+      lyricBgVideo?.addEventListener("loadedmetadata", () => {
+        if (lyricBgVideo.videoWidth && lyricBgVideo.videoHeight && lyricStage) {
+          lyricStage.style.aspectRatio = `${lyricBgVideo.videoWidth} / ${lyricBgVideo.videoHeight}`;
+        }
+      });
+
       lyricScrubber?.addEventListener("input", (e) => {
         if (!audioPlayer) return;
         audioPlayer.currentTime = Number(e.target.value);
-
-        if (lyricBgVideo) {
-          lyricBgVideo.currentTime = 0;
-        }
-
         renderLyrics();
       });
 
