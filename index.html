@@ -613,36 +613,35 @@
       border-radius: 18px;
     }
 
-    .lyric-video-shell {
-      width: 100%;
-      max-width: 760px;
-      margin: 22px auto 0;
-      padding: 12px;
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,247,237,0.92));
-      border: 1px solid rgba(176, 150, 44, 0.14);
-      box-shadow: 0 14px 28px rgba(92, 77, 19, 0.07);
-    }
+.lyric-video-shell {
+  width: 100%;
+  max-width: 560px;
+  margin: 28px auto 0;
+  padding: 12px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,247,237,0.92));
+  border: 1px solid rgba(176, 150, 44, 0.14);
+  box-shadow: 0 14px 28px rgba(92, 77, 19, 0.07);
+}
 
-    .lyric-stage {
-      position: relative;
-      width: 100%;
-      max-width: 720px;
-      aspect-ratio: 720 / 706;
-      overflow: hidden;
-      border-radius: 20px;
-      border: 1px solid rgba(176, 150, 44, 0.12);
-      background: linear-gradient(180deg, #eaf6ff 0%, #f3f9ff 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
-      margin: 0 auto;
-    }
+.lyric-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 720 / 706;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(176, 150, 44, 0.12);
+  background: linear-gradient(180deg, #eaf6ff 0%, #f3f9ff 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+}
+}
 
-    .lyric-bg-video {
+ .lyric-bg-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   display: block;
   z-index: 0;
@@ -1229,10 +1228,19 @@
         font-size: 2rem;
       }
 
-      .lyric-stage {
-        aspect-ratio: 1 / 1;
-      }
+      @media (max-width: 640px) {
+  .lyric-stage {
+    aspect-ratio: 1 / 1;
+  }
+}
 
+@media (max-width: 640px) {
+  .lyric-video-shell {
+    max-width: 92%;
+    margin-top: 24px;
+  }
+}
+      
       .lyric-line {
         width: calc(100% - 24px);
         max-width: 94%;
