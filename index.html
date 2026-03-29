@@ -631,7 +631,7 @@
   overflow: hidden;
   border-radius: 20px;
   border: 1px solid rgba(176, 150, 44, 0.12);
-  background: linear-gradient(180deg, #eaf6ff 0%, #f3f9ff 100%);
+  background: #dfeaf6;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
 }
 
@@ -641,11 +641,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
   display: block;
   z-index: 0;
   pointer-events: none;
-  background: #dfeaf6;
+  background: transparent;
 }
 
     .lyric-stage::before {
@@ -655,7 +655,6 @@
       background:
         linear-gradient(180deg, rgba(34, 49, 74, 0.20), rgba(34, 49, 74, 0.28)),
         linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02) 36%, rgba(10,17,30,0.10) 100%),
-        radial-gradient(circle at 50% 26%, rgba(255,255,255,0.10), rgba(255,255,255,0) 42%);
       pointer-events: none;
       z-index: 1;
     }
