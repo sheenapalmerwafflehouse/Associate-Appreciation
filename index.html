@@ -634,9 +634,8 @@
   background: linear-gradient(180deg, #eaf6ff 0%, #f3f9ff 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
 }
-}
 
- .lyric-bg-video {
+.lyric-bg-video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -648,7 +647,6 @@
   pointer-events: none;
   background: #dfeaf6;
 }
-
 
     .lyric-stage::before {
       content: "";
@@ -1228,19 +1226,12 @@
         font-size: 2rem;
       }
 
-      @media (max-width: 640px) {
-  .lyric-stage {
-    aspect-ratio: 1 / 1;
-  }
-}
-
 @media (max-width: 640px) {
   .lyric-video-shell {
     max-width: 92%;
     margin-top: 24px;
   }
 }
-      
       .lyric-line {
         width: calc(100% - 24px);
         max-width: 94%;
@@ -1369,26 +1360,27 @@
           </audio>
         </div>
 
-        <div class="lyric-stage" id="lyric-stage">
-  <video
-    class="lyric-bg-video"
-    id="lyric-bg-video"
-    muted
-    playsinline
-    loop
-    preload="metadata"
-    poster="Images/Wilson-preview.png"
-    aria-hidden="true"
-  >
-    <source src="Images/Wilson.mp4" type="video/mp4" />
-    <source src="Images/Wilson.webm" type="video/webm" />
-  </video>
+  <div class="lyric-video-shell">
+  <div class="lyric-stage" id="lyric-stage">
+    <video
+      class="lyric-bg-video"
+      id="lyric-bg-video"
+      muted
+      playsinline
+      loop
+      preload="metadata"
+      poster="Images/Wilson-preview.png"
+      aria-hidden="true"
+    >
+      <source src="Images/Wilson.mp4" type="video/mp4" />
+      <source src="Images/Wilson.webm" type="video/webm" />
+    </video>
 
-  <div class="lyric-line-host" id="lyric-line-host"></div>
+    <div class="lyric-line-host" id="lyric-line-host"></div>
+  </div>
 </div>
 
-
-        <div class="lyric-scrubber-wrap">
+<div class="lyric-scrubber-wrap">
           <input
             type="range"
             id="lyric-scrubber"
